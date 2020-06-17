@@ -28,7 +28,7 @@ insert into TRAVELMEMBER (id,name,age,pw) values ('id4','shin',23,'4')
 
 drop table qnaboard
 drop table travelMember
-
+drop table 
 
 create table qnacomment(
 id varchar2(21), 
