@@ -1,0 +1,86 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fm"%>
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>답변 목록</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+	<%@ include file="./com/top.jsp"%>
+	<%@ include file="./com/navbar.jsp"%>
+
+	<div class="container" style="margin: 30px auto 30px auto;">
+
+		<h1>My Answer</h1>
+		<h5>${param.id} 회원님께서 답변하신 게시글 목록입니다.</h5><br>
+
+		<div class="dropdown">
+			<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">나의 답변 목록</button>
+			<div class="dropdown-menu">
+				<a class="dropdown-item" href="asklist.do?id=${param.id}">나의 질문 목록</a>
+			</div>
+		</div>
+		<br>
+		<table class="table table-hover">
+
+			<thead class="thead-dark">
+				<tr>
+					<th>번호</th>
+					<th>제목</th>
+					<th>글쓴이</th>
+					<th>ID</th>
+					<th>작성일</th>
+					<th>조회수</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<c:forEach items="${list}" var="dto">
+					<tr>
+						<td>${dto.num}</td>
+						<td width="300px">
+							<c:forEach begin="1" end="${dto.repIndent}">
+&nbsp;&nbsp;
+</c:forEach>
+							<c:choose>
+								<c:when test="${dto.id eq param.id}">
+									<a class="btn btn-info" style="color: white;" href="read.do?num=${dto.num}&id=${param.id}">${dto.title}</a>
+								</c:when>
+								<c:otherwise>
+									<a style="color: rgb(28,113,134);" href="read.do?num=${dto.num}&id=${param.id}">${dto.title}</a>
+								</c:otherwise>
+							</c:choose>
+
+						</td>
+						<td>${dto.writer}</td>
+						<td>${dto.id}</td>
+						<td>${dto.writeday}</td>
+						<td>${dto.readcnt}</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+
+		</table>
+
+		<br> <br>
+		<a style="position: relative; left: 90%" class="btn btn-secondary" href="qnalist.do?id=${param.id}">목록</a>
+
+
+
+	</div>
+
+
+	<%@ include file="./com/footer.jsp"%>
+
+</body>
+</html>
