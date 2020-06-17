@@ -11,16 +11,18 @@ repStep number(4),
 repIndent number(4) )
 
 create table travelMember (
-	id varchar2(4) primary key, 
+	id varchar2(21) primary key, 
 	name varchar2(8) not null, 
 	age number(4) check(age<200), 
-	pw varchar2(8) not null
+	pw varchar2(15) not null
 )
 
 select * from travelmember
 
-insert into TRAVELMEMBER (id,name,age,pw) values ('id1','kim',23,'1')
-
+insert into TRAVELMEMBER (id,name,age,pw) values ('id1','kang',24,'1')
+insert into TRAVELMEMBER (id,name,age,pw) values ('id2','na',25,'2')
+insert into TRAVELMEMBER (id,name,age,pw) values ('id3','dong',27,'3')
+insert into TRAVELMEMBER (id,name,age,pw) values ('id4','shin',23,'4')
 
 
 
@@ -47,3 +49,6 @@ drop table qnacomment
 select * from QNACOMMENT
 
 insert into qnacomment (id,num,writer,content,)
+
+
+-- test
