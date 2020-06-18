@@ -34,6 +34,7 @@ public class ReplyComCommand implements Command {
 		BoardDAO dao = new BoardDAO();
 		QnaCommandDTO dto = new QnaCommandDTO(id, qnanum, -1, writer, content, null, -1, -1, -1);
 		dao.replycomment(orgnum, dto);
+		dao.updateReadcnt(qnanum);
 		return new CommandAction(true, "read.do?num=" + qnanum + "&id=" + id);
 	}
 

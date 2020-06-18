@@ -20,6 +20,15 @@
 			<code>아래 빈칸을 빠짐없이 입력</code>
 			해주시면 가입 할 수 있습니다.
 		</p>
+		
+		
+		<c:if test="${overlap}">
+			<div class="alert alert-warning">
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
+				<strong>Warning!</strong> 가입 불가능한 ID입니다. 다시 입력해주세요.
+			</div>
+		</c:if>
+
 		<form action="insert.do" class="was-validated" method="post">
 			<div class="form-group">
 				<label for="id">Id:</label> <input type="text" class="form-control" id="id" placeholder="ID를 입력해주세요" name="id" required>
@@ -43,13 +52,12 @@
 			</div>
 			<div class="form-group form-check">
 				<label class="form-check-label"> <input class="form-check-input" type="checkbox" name="remember" required> 정보제공에 동의 합니다.
-					<div class="valid-feedback">완료됨.</div>
-					<div class="invalid-feedback">정보를 입력해주세요.</div>
+
 				</label>
 			</div>
 			<button type="submit" class="btn btn-primary">회원가입</button>
 		</form>
 	</div>
-	<%@ include file="./com/footer.jsp" %>
+	<%@ include file="./com/footer.jsp"%>
 </body>
 </html>

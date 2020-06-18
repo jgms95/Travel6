@@ -699,6 +699,24 @@ public class BoardDAO {
 		}
 	}
 
+	public void updateReadcnt(int num) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = "update qnaboard set readcnt = readcnt - 1 where num = ? ";
+		try {
+			
+			conn = dataFactory.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			closeAll(null, pstmt, conn);
+		}
+	}
+
 
 	
 	

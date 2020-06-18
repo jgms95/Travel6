@@ -29,6 +29,7 @@ public class PutQnaCommentCommand implements Command {
 		QnaCommandDTO dto = new QnaCommandDTO(id, 1, 1, writer, content,null, -1, -1, -1);
 		BoardDAO dao = new BoardDAO();
 		dao.insertQnaCom(dto, num);
+		dao.updateReadcnt(num);
 		
 		return new CommandAction(true, "read.do?num="+num+"&id="+id);
 	}

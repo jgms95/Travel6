@@ -55,12 +55,16 @@ insert into qnacomment (id,num,writer,content,)
 
 
 
+create table leaveMember(
+	id varchar2(21) primary key, 
+	name varchar2(8) not null, 
+	age number(4) check(age<200)
+)
 
 
 
-
-
-
+select * from leaveMember
+select id from travelMember
 
 
 

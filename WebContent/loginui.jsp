@@ -15,8 +15,8 @@
 
 	<div class="container" style="margin: 30px 0 30px 0;">
 		<h2>로그인</h2>
-		<c:if test="${null ne error }">
-			<div class="alert alert-warning alert-dismissible">
+	<c:if test="${null ne error}">
+		<div class="alert alert-warning alert-dismissible">
 				<button type="button" class="close" data-dismiss="alert">&times;</button>
 				<strong>Warning!</strong> ${error }
 			</div>

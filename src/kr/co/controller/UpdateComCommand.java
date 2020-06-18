@@ -30,7 +30,7 @@ public class UpdateComCommand implements Command {
 
 		BoardDAO dao = new BoardDAO();
 		dao.updateComment(new QnaCommandDTO(null, -1, num, writer, content, null, -1, -1, -1));
-
+		dao.updateReadcnt(qnanum);
 		return new CommandAction(true, "read.do?num=" + qnanum + "&id=" + id);
 
 	}

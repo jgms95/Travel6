@@ -45,7 +45,7 @@ public class DeleteComCommand implements Command {
 			dao.deleteAllComment(qnanum, repRoot);
 		}
 		
-		
+		dao.updateReadcnt(qnanum);
 		return new CommandAction(true, "read.do?num=" + qnanum + "&id=" + id);
 	}
 

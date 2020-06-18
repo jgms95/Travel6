@@ -13,8 +13,11 @@ public class InsertUICommand implements Command {
 	@Override
 	public CommandAction execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		String sOverlap = request.getParameter("overlap")!=null ? request.getParameter("overlap") : "false"; //아이디 중복여부
+		boolean overlap = sOverlap.equals("true") ? true : false;
 		
-		return new CommandAction(true, "insertui.jsp");
+		request.setAttribute("overlap", overlap);
+		return new CommandAction(false, "insertui.jsp");
 	}
 
 }
