@@ -117,7 +117,7 @@
 
 			<c:if test="${commentdto.repIndent>0}">
 				<h4>
-					<span class="badge badge-secondary ">Re:</span>
+					<span class="badge badge-info ">Re: ${commentdto.orgWriter} </span>
 				</h4>
 			</c:if>
 
@@ -141,7 +141,7 @@
 
 
 
-					<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModalupdate${commentdto.num}">수정</button>
+					<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#myModalupdate${commentdto.num}">수정</button>
 					<div class="modal fade" id="myModalupdate${commentdto.num}">
 						<div class="modal-dialog modal-sm">
 							<div class="modal-content">
@@ -176,7 +176,7 @@
 
 
 
-					<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModaldelete${commentdto.num}">삭제</button>
+					<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#myModaldelete${commentdto.num}">삭제</button>
 					<div class="modal fade" id="myModaldelete${commentdto.num}">
 						<div class="modal-dialog modal-sm">
 							<div class="modal-content">
@@ -212,7 +212,7 @@
 
 
 
-					<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal${commentdto.num}">답변 달기</button>
+					<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#myModal${commentdto.num}">답변 달기</button>
 					<div class="modal fade" id="myModal${commentdto.num}">
 						<div class="modal-dialog modal-sm">
 							<div class="modal-content">
@@ -223,8 +223,9 @@
 
 								<form action="replyComment.do" method="post" class="was-validated">
 
-									<input type="hidden" name="id" value="${param.id}"> <input type="hidden" name="num" value="${commentdto.num}"> <input
-										type="hidden" name="qnanum" value="${commentdto.qnanum}"> <input type="hidden" name="writer" value="${writer}">
+									<input type="hidden" name="id" value="${param.id}"> <input type="hidden" name="num" value="${commentdto.num}">
+									<input type="hidden" name="qnanum" value="${commentdto.qnanum}"> <input type="hidden" name="writer" value="${writer}">
+									<input type="hidden" name="orgWriter" value="${commentdto.writer}">
 									<div class="modal-body">
 
 

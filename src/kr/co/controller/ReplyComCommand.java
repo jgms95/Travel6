@@ -30,9 +30,10 @@ public class ReplyComCommand implements Command {
 		}
 		String writer = request.getParameter("writer");
 		String content = request.getParameter("content");
-
+		String orgWriter = request.getParameter("orgWriter");
+		
 		BoardDAO dao = new BoardDAO();
-		QnaCommandDTO dto = new QnaCommandDTO(id, qnanum, -1, writer, content, null, -1, -1, -1);
+		QnaCommandDTO dto = new QnaCommandDTO(id, qnanum, -1, writer, content, null, -1, -1, -1,orgWriter);
 		dao.replycomment(orgnum, dto);
 		dao.updateReadcnt(qnanum);
 		return new CommandAction(true, "read.do?num=" + qnanum + "&id=" + id);

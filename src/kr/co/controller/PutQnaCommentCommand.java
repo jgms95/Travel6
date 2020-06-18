@@ -26,7 +26,7 @@ public class PutQnaCommentCommand implements Command {
 		String writer = request.getParameter("writer");
 		String content = request.getParameter("content");
 		
-		QnaCommandDTO dto = new QnaCommandDTO(id, 1, 1, writer, content,null, -1, -1, -1);
+		QnaCommandDTO dto = new QnaCommandDTO(id, 1, 1, writer, content,null, -1, -1, -1,null);
 		BoardDAO dao = new BoardDAO();
 		dao.insertQnaCom(dto, num);
 		dao.updateReadcnt(num);

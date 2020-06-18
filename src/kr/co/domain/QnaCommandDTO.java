@@ -13,12 +13,13 @@ public class QnaCommandDTO implements Serializable {
 	private int repRoot;
 	private int repStep;
 	private int repIndent;
+	private String orgWriter;
 	
 	public QnaCommandDTO() {
 	}
 
 	public QnaCommandDTO(String id, int qnanum, int num, String writer, String content, String writeday, int repRoot, int repStep,
-			int repIndent) {
+			int repIndent, String orgWriter) {
 		super();
 		this.id = id;
 		this.qnanum = qnanum;
@@ -29,6 +30,15 @@ public class QnaCommandDTO implements Serializable {
 		this.repRoot = repRoot;
 		this.repStep = repStep;
 		this.repIndent = repIndent;
+		this.orgWriter = orgWriter;
+	}
+
+	public String getOrgWriter() {
+		return orgWriter;
+	}
+
+	public void setOrgWriter(String orgWriter) {
+		this.orgWriter = orgWriter;
 	}
 
 	public String getId() {

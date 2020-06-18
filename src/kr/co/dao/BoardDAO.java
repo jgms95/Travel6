@@ -521,7 +521,8 @@ public class BoardDAO {
 				String writeday = rs.getString("writeday");
 				int repRoot = rs.getInt("repRoot");
 				int repIndent = rs.getInt("repIndent");
-				QnaCommandDTO dto = new QnaCommandDTO(id, number, num, writer, content, writeday, repRoot, -1, repIndent);
+				String orgWriter = rs.getString("orgWriter");
+				QnaCommandDTO dto = new QnaCommandDTO(id, number, num, writer, content, writeday, repRoot, -1, repIndent,orgWriter);
 				list.add(dto);
 			}
 			
@@ -538,7 +539,7 @@ public class BoardDAO {
 	public void replycomment(int orgnum, QnaCommandDTO dto) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		String sql = "insert into qnacomment (id, qnanum,num,writer,content,repRoot,repStep,repIndent) values (?,?,?,?,?,?,?,?)";
+		String sql = "insert into qnacomment (id, qnanum,num,writer,content,repRoot,repStep,repIndent,orgWriter) values (?,?,?,?,?,?,?,?,?)";
 		
 		boolean isOk = false;
 		
@@ -560,7 +561,7 @@ public class BoardDAO {
 			pstmt.setInt(6, orgDTO.getRepRoot());
 			pstmt.setInt(7, orgDTO.getRepStep()+1);
 			pstmt.setInt(8, orgDTO.getRepIndent()+1);
-			
+			pstmt.setString(9, dto.getOrgWriter());
 			pstmt.executeUpdate();
 			
 			isOk = true;
@@ -605,7 +606,7 @@ public class BoardDAO {
 				int repStep = rs.getInt("repStep");
 				int repIndent = rs.getInt("repIndent");
 				
-				dto = new QnaCommandDTO(null, -1, number, writer, content, null, repRoot, repStep, repIndent);
+				dto = new QnaCommandDTO(null, -1, number, writer, content, null, repRoot, repStep, repIndent,null);
 				
 			}
 	
