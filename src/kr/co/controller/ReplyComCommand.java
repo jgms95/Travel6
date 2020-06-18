@@ -22,8 +22,6 @@ public class ReplyComCommand implements Command {
 			orgnum = Integer.parseInt(sNum);
 		}
 		
-
-		System.out.println(orgnum);
 		
 		String sQnanum = request.getParameter("qnanum");
 		int qnanum = -1;

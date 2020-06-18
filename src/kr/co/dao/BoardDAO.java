@@ -293,6 +293,24 @@ public class BoardDAO {
 			closeAll(null, pstmt, conn);
 		}
 	}
+	
+	public void deleteRelatedcom(int num) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = "delete from qnacomment where qnanum = ?";
+		try {
+			
+			conn = dataFactory.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			closeAll(null, pstmt, conn);
+		}
+	}
 
 	public void reply(int orgnum, BoardDTO dto) {
 		Connection conn = null;
@@ -501,8 +519,9 @@ public class BoardDAO {
 				String writer = rs.getString("writer");
 				String content = rs.getString("content");
 				String writeday = rs.getString("writeday");
+				int repRoot = rs.getInt("repRoot");
 				int repIndent = rs.getInt("repIndent");
-				QnaCommandDTO dto = new QnaCommandDTO(id, number, num, writer, content, writeday, -1, -1, repIndent);
+				QnaCommandDTO dto = new QnaCommandDTO(id, number, num, writer, content, writeday, repRoot, -1, repIndent);
 				list.add(dto);
 			}
 			
@@ -659,6 +678,28 @@ public class BoardDAO {
 			closeAll(null, pstmt, conn);
 		}
 	}
+
+	public void deleteAllComment(int qnanum, int repRoot) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = "delete from qnacomment where qnanum = ? and repRoot = ?";
+		try {
+			
+			conn = dataFactory.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, qnanum);
+			pstmt.setInt(2, repRoot);
+			
+			pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			closeAll(null, pstmt, conn);
+		}
+	}
+
+
 	
 	
 }

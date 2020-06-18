@@ -41,7 +41,8 @@ repRoot number(4),
 repStep number(4), 
 repIndent number(4)
 )
-select * from qnacomment where qnanum = 12 order by repRoot desc, num asc, repStep desc 
+select * from qnacomment where qnanum = 1 order by repRoot desc, num asc, repStep desc 
+update qnacomment set id = null, writer='탈퇴회원' where id = 'id1'
 
 
 select id, num, writer, content, writeday, repIndent from qnacomment where qnanum = 12 order by repRoot desc, repStep asc
@@ -49,6 +50,31 @@ drop table qnacomment
 select * from QNACOMMENT
 
 insert into qnacomment (id,num,writer,content,)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 -- test

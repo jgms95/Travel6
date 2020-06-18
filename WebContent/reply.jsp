@@ -31,12 +31,12 @@
 				<label for="id">ID : </label> <input name="id" class="form-control" readonly value="${param.id}">
 			</div>
 			<div class="form-group">
-			<label for="writer">작성자 : </label> <input name="writer" class="form-control" readonly value="${writer}">
+				<label for="writer">작성자 : </label> <input name="writer" class="form-control" readonly value="${writer}">
 			</div>
 			<div class="form-group">
 				<label for="title">제목 : </label> <input type="text" class="form-control" placeholder="제목을 입력하세요." name="title" required>
-				<div class="valid-feedback">Valid.</div>
-				<div class="invalid-feedback">Please fill out this field.</div>
+				<div class="valid-feedback">입력 완료</div>
+				<div class="invalid-feedback">정보를 입력해주세요.</div>
 			</div>
 			내용 : <br>
 			<textarea style="width: 100%" placeholder="내용을 입력하세요." name="content" required></textarea>

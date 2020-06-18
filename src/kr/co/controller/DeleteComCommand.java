@@ -12,6 +12,19 @@ public class DeleteComCommand implements Command {
 	@Override
 	public CommandAction execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
+		String sRepIndent = request.getParameter("repIndent");
+		int repIndent = 0;
+		if(sRepIndent !=null) {
+			repIndent = Integer.parseInt(sRepIndent);
+		}
+		
+		String sRepRoot = request.getParameter("repRoot");
+		int repRoot = 0;
+		if(sRepRoot !=null) {
+			repRoot = Integer.parseInt(sRepRoot);
+		}
+		
 		String sNum = request.getParameter("num");
 		int num = -1;
 		if (sNum != null) {
@@ -25,10 +38,12 @@ public class DeleteComCommand implements Command {
 		String id = request.getParameter("id"); // 로그인된 id
 		
 		
-		
 		BoardDAO dao = new BoardDAO();
+		if(repIndent>0) {
 		dao.deleteComment(num);
-		
+		}else {
+			dao.deleteAllComment(qnanum, repRoot);
+		}
 		
 		
 		return new CommandAction(true, "read.do?num=" + qnanum + "&id=" + id);

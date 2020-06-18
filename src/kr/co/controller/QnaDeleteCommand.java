@@ -24,6 +24,7 @@ public class QnaDeleteCommand implements Command {
 
 		BoardDAO dao = new BoardDAO();
 		dao.delete(num);
+		dao.deleteRelatedcom(num);
 
 		return new CommandAction(true, "qnalist.do?id=" + id);
 	}

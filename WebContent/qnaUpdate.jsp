@@ -33,19 +33,18 @@
 				<label for="num">NUM : </label> <input name="num" class="form-control" readonly value="${dto.num}">
 			</div>
 			<div class="form-group">
-			<label for="writer">작성자 : </label> <input name="writer" class="form-control" readonly value="${writer}">
+				<label for="writer">작성자 : </label> <input name="writer" class="form-control" readonly value="${writer}">
 			</div>
 			<div class="form-group">
 				<label for="title">제목 : </label> <input type="text" class="form-control" placeholder="제목을 입력하세요." name="title" required>
-				<div class="valid-feedback">Valid.</div>
-				<div class="invalid-feedback">Please fill out this field.</div>
+				<div class="valid-feedback">입력 완료</div>
+				<div class="invalid-feedback">정보를 입력해주세요.</div>
 			</div>
 			내용 : <br>
 			<textarea style="width: 100%" placeholder="내용을 입력하세요." name="content" required></textarea>
-			<div class="valid-feedback">Valid.</div>
-			<div class="invalid-feedback">Please fill out this field.</div>
-			<br>
-			<br>
+			<div class="valid-feedback">입력 완료</div>
+			<div class="invalid-feedback">정보를 입력해주세요.</div>
+			<br> <br>
 			<button type="submit" class="btn btn-warning">수정 완료</button>
 			<a class="btn btn-secondary" href="qnalist.do?id=${param.id}">목록</a>
 		</form>

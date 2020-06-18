@@ -98,8 +98,8 @@
 
 			<div class="form-group">
 				<label for="title">내용 : </label> <input type="text" class="form-control" placeholder="내용을 입력하세요." name="content" required>
-				<div class="valid-feedback">Valid.</div>
-				<div class="invalid-feedback">Please fill out this field.</div>
+				<div class="valid-feedback">입력 완료</div>
+				<div class="invalid-feedback">정보를 입력해주세요.</div>
 			</div>
 			<button type="submit" class="btn btn-warning">작성완료</button>
 		</form>
@@ -157,6 +157,8 @@
 
 										<div class="form-group">
 											<label for="content">내용 : </label> <input type="text" class="form-control" placeholder="내용을 입력하세요." name="content" required>
+											<div class="valid-feedback">입력 완료</div>
+											<div class="invalid-feedback">정보를 입력해주세요.</div>
 										</div>
 									</div>
 									<div class="modal-footer">
@@ -184,8 +186,10 @@
 								</div>
 								<form action="deleteComment.do" method="post" class="was-validated">
 
-									<input type="hidden" name="id" value="${param.id}"> <input type="hidden" name="num" value="${commentdto.num}"> <input
-										type="hidden" name="qnanum" value="${commentdto.qnanum}">
+									<input type="hidden" name="id" value="${param.id}"> <input type="hidden" name="num" value="${commentdto.num}">
+									<input type="hidden" name="qnanum" value="${commentdto.qnanum}">
+									<input type="hidden" name="repIndent" value="${commentdto.repIndent}">
+									<input type="hidden" name="repRoot" value="${commentdto.repRoot}">
 									<div class="modal-body">정말 삭제하시겠습니까?</div>
 									<div class="modal-footer">
 										<button type="submit" class="btn btn-info">예</button>
@@ -226,8 +230,8 @@
 
 										<div class="form-group">
 											<label for="content">내용 : </label> <input type="text" class="form-control" placeholder="내용을 입력하세요." name="content" required>
-											<div class="valid-feedback">Valid.</div>
-											<div class="invalid-feedback">Please fill out this field.</div>
+											<div class="valid-feedback">입력 완료</div>
+											<div class="invalid-feedback">정보를 입력해주세요.</div>
 										</div>
 									</div>
 									<div class="modal-footer">
