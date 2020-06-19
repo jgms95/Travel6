@@ -21,7 +21,7 @@
 	<c:if test="${noInfo}">
 			<div class="alert alert-warning">
 				<button type="button" class="close" data-dismiss="alert">&times;</button>
-				<strong>Warning!</strong> 입력하신 정보와 맞는 ID가 없습니다. 다시 입력해주세요.
+				<strong>Warning!</strong> 입력하신 정보와 맞는 아이디가 없습니다. 다시 입력해주세요.
 			</div>
 		</c:if>
 		<form action="findId.do" class="was-validated" method="post">
@@ -32,11 +32,6 @@
 			</div>
 			<div class="form-group">
 				<label for="age">Age:</label> <input type="text" class="form-control" id="age" placeholder="나이를 입력해주세요" name="age" required>
-				<div class="valid-feedback">완료됨.</div>
-				<div class="invalid-feedback">정보를 입력해주세요.</div>
-			</div>
-			<div class="form-group">
-				<label for="pw">Password:</label> <input type="password" class="form-control" id="pw" placeholder="Password를 입력해주세요" name="pw" required>
 				<div class="valid-feedback">완료됨.</div>
 				<div class="invalid-feedback">정보를 입력해주세요.</div>
 			</div>

@@ -21,11 +21,10 @@ public class FindIdCommand implements Command{
 		if (sAge != null) {
 			age = Integer.parseInt(sAge);
 		}
-		String pw = request.getParameter("pw");
 		Boolean noInfo = false; //없는 정보인가
 		
 		MemberDAO dao = new MemberDAO();
-		MemberDTO dto = dao.findId(name,age,pw);
+		MemberDTO dto = dao.findId(name,age);
 		
 		if(dto.getId()!=null) {
 			request.setAttribute("dto", dto);
