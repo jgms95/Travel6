@@ -8,7 +8,9 @@ writeday date default sysdate,
 readcnt number(4) default 0, 
 repRoot number(4), 
 repStep number(4), 
-repIndent number(4) )
+repIndent number(4),
+filename varchar2(100)
+)
 
 create table travelMember (
 	id varchar2(21) primary key, 
@@ -18,7 +20,9 @@ create table travelMember (
 )
 
 drop table travelMember
-
+delete from qnaboard where id = 'id1'
+alter table qnaboard add (filename varchar2(100))
+select * from qnaboard
 select * from travelmember
 select * from QNACOMMENT
 select * from leaveMember

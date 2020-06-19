@@ -14,10 +14,24 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </head>
+<script>
+
+function onDownload(num) {
+
+var o = document.getElementById("ifrm_filedown");
+
+o.src = "download.do?num=" + num;
+
+}
+
+</script>
 
 <body>
 	<%@ include file="./com/top.jsp"%>
 	<%@ include file="./com/navbar.jsp"%>
+<iframe id="ifrm_filedown"  style="position:absolute; z-index:1;visibility : hidden;"></iframe>
+
+
 
 	<div class="container" style="margin: 30px auto 30px auto;">
 
@@ -35,6 +49,8 @@
 				<strong>질문 내용 :</strong>
 			</h5>
 			<h6>${dto.content}</h6>
+			<h5><a style="color: white;" href="#" onclick="onDownload('${dto.num}')"> ${dto.filename} </a> </h5>
+			
 
 
 

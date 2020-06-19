@@ -25,7 +25,7 @@
 
 		<h1>답글 쓰기</h1>
 
-		<form action="reply.do?" method="post" class="was-validated">
+		<form action="reply.do" method="post" class="was-validated" enctype="multipart/form-data">
 			<input type="hidden" name="id" value="${param.id}"> <input type="hidden" name="num" value="${param.num}">
 			<div class="form-group">
 				<label for="id">ID : </label> <input name="id" class="form-control" readonly value="${param.id}">
@@ -42,6 +42,12 @@
 			<textarea style="width: 100%" placeholder="내용을 입력하세요." name="content" required></textarea>
 			<div class="valid-feedback">Valid.</div>
 			<div class="invalid-feedback">Please fill out this field.</div>
+			<br>
+			<p>파일:</p>
+			<div class="custom-file mb-3">
+				<input type="file" class="custom-file-input" id="customFile" name="filename">
+				<label class="custom-file-label" for="customFile">Choose file</label>
+			</div>
 			<br>
 			<button type="submit" class="btn btn-info">답변 완료</button>
 			<a class="btn btn-secondary" href="qnalist.do?id=${param.id}">목록</a>

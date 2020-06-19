@@ -62,6 +62,7 @@ public class FrontController extends HttpServlet {
 		map.put("/replyComment.do","kr.co.controller.ReplyComCommand");
 		map.put("/updateComment.do", "kr.co.controller.UpdateComCommand");
 		map.put("/deleteComment.do", "kr.co.controller.DeleteComCommand");
+		map.put("/download.do", "kr.co.controller.DownloadAction");
 
 		
 		try {
@@ -77,6 +78,7 @@ public class FrontController extends HttpServlet {
 			} else {
 				request.getRequestDispatcher(action.getWhere()).forward(request, response);
 			}
+			
 		}
 	}
 

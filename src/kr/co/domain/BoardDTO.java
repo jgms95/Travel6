@@ -15,11 +15,28 @@ public class BoardDTO implements Serializable{
 	private int repRoot;
 	private int repStep;
 	private int repIndent;
+	private String filename;
 	
 	public BoardDTO() {
 		// TODO Auto-generated constructor stub
 	}
 	
+	public BoardDTO(String id, int num, String writer, String title, String content, String writeday, int readcnt,
+			int repRoot, int repStep, int repIndent, String filename) {
+		super();
+		this.id = id;
+		this.num = num;
+		this.writer = writer;
+		this.title = title;
+		this.content = content;
+		this.writeday = writeday;
+		this.readcnt = readcnt;
+		this.repRoot = repRoot;
+		this.repStep = repStep;
+		this.repIndent = repIndent;
+		this.filename = filename;
+	}
+
 	public BoardDTO(String id, int num, String writer, String title, String content, String writeday, int readcnt,
 			int repRoot, int repStep, int repIndent) {
 		super();
@@ -33,6 +50,14 @@ public class BoardDTO implements Serializable{
 		this.repRoot = repRoot;
 		this.repStep = repStep;
 		this.repIndent = repIndent;
+	}
+
+	public String getFilename() {
+		return filename;
+	}
+
+	public void setFilename(String filename) {
+		this.filename = filename;
 	}
 
 	public int getNum() {

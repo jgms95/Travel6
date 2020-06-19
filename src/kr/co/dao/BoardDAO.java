@@ -107,7 +107,7 @@ public class BoardDAO {
 	public void insert(BoardDTO boardDTO) { //글 작성
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		String sql = "insert into qnaboard (id, num, writer, title, content, repRoot, repStep, repIndent) values (?,?,?,?,?,?,?,?)";
+		String sql = "insert into qnaboard (id, num, writer, title, content, repRoot, repStep, repIndent, filename) values (?,?,?,?,?,?,?,?,?)";
 		try {
 			
 			conn = dataFactory.getConnection();
@@ -122,6 +122,7 @@ public class BoardDAO {
 			pstmt.setInt(6, num);
 			pstmt.setInt(7, 0);
 			pstmt.setInt(8, 0);
+			pstmt.setString(9, boardDTO.getFilename());
 			
 			pstmt.executeUpdate();
 			
@@ -178,7 +179,8 @@ public class BoardDAO {
 				String title = rs.getString("title");
 				String writeday = rs.getString("writeday");
 				int readcnt = rs.getInt("readcnt");
-				dto = new BoardDTO(id, number, writer, title, content, writeday, readcnt, 0, 0, 0);
+				String filename = rs.getString("filename");
+				dto = new BoardDTO(id, number, writer, title, content, writeday, readcnt, 0, 0, 0,filename);
 				isOk = true;
 			}
 			
@@ -255,15 +257,15 @@ public class BoardDAO {
 	public void update(BoardDTO dto) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		String sql = "update qnaboard set writer= ?, title= ?, content=? where num = ?";
+		String sql = "update qnaboard set title= ?, content=?, filename=? where num = ?";
 		try {
 			
 			conn = dataFactory.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setString(1, dto.getWriter());
-			pstmt.setString(2,dto.getTitle());
-			pstmt.setString(3, dto.getContent());
+			pstmt.setString(1,dto.getTitle());
+			pstmt.setString(2, dto.getContent());
+			pstmt.setString(3, dto.getFilename());
 			pstmt.setInt(4, dto.getNum());
 			pstmt.executeUpdate();
 			
@@ -315,7 +317,7 @@ public class BoardDAO {
 	public void reply(int orgnum, BoardDTO dto) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		String sql = "insert into qnaboard (id, num,writer,title,content,repRoot,repStep,repIndent) values (?,?,?,?,?,?,?,?)";
+		String sql = "insert into qnaboard (id, num,writer,title,content,repRoot,repStep,repIndent,filename) values (?,?,?,?,?,?,?,?,?)";
 		
 		boolean isOk = false;
 		
@@ -337,7 +339,7 @@ public class BoardDAO {
 			pstmt.setInt(6, orgDTO.getRepRoot());
 			pstmt.setInt(7, orgDTO.getRepStep()+1);
 			pstmt.setInt(8, orgDTO.getRepIndent()+1);
-			
+			pstmt.setString(9, dto.getFilename());
 			pstmt.executeUpdate();
 			
 			isOk = true;

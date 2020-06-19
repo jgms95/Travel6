@@ -27,7 +27,7 @@
 		<h1>질문 수정</h1>
 
 
-		<form action="qnaUpdate.do" method="post" class="was-validated">
+		<form action="qnaUpdate.do" method="post" class="was-validated" enctype="multipart/form-data">
 			<input type="hidden" name="id" value="${param.id}">
 			<div class="form-group">
 				<label for="num">NUM : </label> <input name="num" class="form-control" readonly value="${dto.num}">
@@ -44,6 +44,11 @@
 			<textarea style="width: 100%" placeholder="내용을 입력하세요." name="content" required></textarea>
 			<div class="valid-feedback">입력 완료</div>
 			<div class="invalid-feedback">정보를 입력해주세요.</div>
+			<p>파일:</p>
+			<div class="custom-file mb-3">
+				<input type="file" class="custom-file-input" id="customFile" name="filename">
+				<label class="custom-file-label" for="customFile">Choose file</label>
+			</div>
 			<br> <br>
 			<button type="submit" class="btn btn-warning">수정 완료</button>
 			<a class="btn btn-secondary" href="qnalist.do?id=${param.id}">목록</a>

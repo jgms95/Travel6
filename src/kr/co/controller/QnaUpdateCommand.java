@@ -2,9 +2,13 @@ package kr.co.controller;
 
 import java.io.IOException;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import kr.co.command.Command;
 import kr.co.dao.BoardDAO;
@@ -16,25 +20,38 @@ public class QnaUpdateCommand implements Command {
 	@Override
 	public CommandAction execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 
-		String sNum = request.getParameter("num");
+		MultipartRequest multi = null;
+
+		int sizeLimit = 10 * 1024 * 1024;
+
+		ServletContext context = request.getSession().getServletContext();
+		String savePath = context.getRealPath("/upload");
+
+		try {
+			multi = new MultipartRequest(request, savePath, sizeLimit, "UTF-8", new DefaultFileRenamePolicy());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		String filename = multi.getFilesystemName("filename");
+
+		String sNum = multi.getParameter("num");
 		int num = -1;
 		if (sNum != null) {
 			num = Integer.parseInt(sNum);
 		}
-		String id = request.getParameter("id"); //로그인된 id
-		String writer = request.getParameter("writer");
-		String title = request.getParameter("title");
-		String content = request.getParameter("content");
-		
+		String id = multi.getParameter("id"); // 로그인된 id
+		String writer = multi.getParameter("writer");
+		String title = multi.getParameter("title");
+		String content = multi.getParameter("content");
 
-		
-		
-		
-			BoardDAO dao = new BoardDAO();
-			dao.update(new BoardDTO(null, num, writer, title, content, null, -1, -1, -1, -1));
-			return new CommandAction(true, "qnalist.do?id="+id);
-		
+		BoardDAO dao = new BoardDAO();
+		dao.update(new BoardDTO(null, num, writer, title, content, null, -1, -1, -1, -1, filename));
+		return new CommandAction(true, "qnalist.do?id=" + id);
+
 	}
 
 }
