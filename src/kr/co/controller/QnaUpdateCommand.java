@@ -43,19 +43,19 @@ public class QnaUpdateCommand implements Command {
 		if (sNum != null) {
 			num = Integer.parseInt(sNum);
 		}
-		String id = multi.getParameter("id"); // 로그인된 id
+		String id = multi.getParameter("id"); 
 		String writer = multi.getParameter("writer");
 		String title = multi.getParameter("title");
 		String content = multi.getParameter("content");
 
 		BoardDAO dao = new BoardDAO();
 
-		String exFilename = dao.read(num).getFilename(); // 기존에 저장되어 있던 파일 삭제
+		String exFilename = dao.read(num).getFilename();
 		ServletContext context2 = request.getSession().getServletContext();
 		String uploadFileName = context2.getRealPath("/upload") + "/" + exFilename;
 		File uploadfile = new File(uploadFileName);
 		if (uploadfile.exists() && uploadfile.isFile()) {
-			uploadfile.delete(); // 파일 삭제
+			uploadfile.delete(); 
 		}
 
 		dao.update(new BoardDTO(null, num, writer, title, content, null, -1, -1, -1, -1, filename));

@@ -49,7 +49,7 @@ o.src = "download.do?num=" + num;
 				<strong>질문 내용 :</strong>
 			</h5>
 			<h6>${dto.content}</h6>
-			<h5><a style="color: white;" href="#" onclick="onDownload('${dto.num}')"> ${dto.filename} </a> </h5>
+			<h5><a style="color: white;" href="#" onclick="onDownload('${dto.num}')"><strong>파일 :</strong> ${dto.filename} </a> </h5>
 			
 
 

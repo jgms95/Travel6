@@ -19,6 +19,19 @@ create table travelMember (
 	pw varchar2(15) not null
 )
 
+create table qnacomment(
+id varchar2(21), 
+qnanum number(4),
+num number(4) primary key, 
+writer varchar2(21) not null, 
+content varchar2(1000), 
+writeday date default sysdate, 
+repRoot number(4), 
+repStep number(4), 
+repIndent number(4),
+orgWriter varchar2(21)
+)
+
 drop table travelMember
 delete from qnaboard where id = 'id1'
 alter table qnaboard add (filename varchar2(100))
@@ -42,18 +55,7 @@ create table leaveMember(
 
 
 
-create table qnacomment(
-id varchar2(21), 
-qnanum number(4),
-num number(4) primary key, 
-writer varchar2(21) not null, 
-content varchar2(1000), 
-writeday date default sysdate, 
-repRoot number(4), 
-repStep number(4), 
-repIndent number(4),
-orgWriter varchar2(21)
-)
+
 
 drop table qnacomment
 

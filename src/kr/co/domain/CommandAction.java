@@ -5,7 +5,7 @@ public class CommandAction {
 	private String where;
 	
 	public CommandAction() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public CommandAction(boolean isReDirect, String where) {
