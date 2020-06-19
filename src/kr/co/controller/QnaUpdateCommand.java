@@ -1,5 +1,6 @@
 package kr.co.controller;
 
+import java.io.File;
 import java.io.IOException;
 
 import javax.servlet.ServletContext;
@@ -37,7 +38,6 @@ public class QnaUpdateCommand implements Command {
 		}
 
 		String filename = multi.getFilesystemName("filename");
-
 		String sNum = multi.getParameter("num");
 		int num = -1;
 		if (sNum != null) {
@@ -49,6 +49,15 @@ public class QnaUpdateCommand implements Command {
 		String content = multi.getParameter("content");
 
 		BoardDAO dao = new BoardDAO();
+
+		String exFilename = dao.read(num).getFilename(); // 기존에 저장되어 있던 파일 삭제
+		ServletContext context2 = request.getSession().getServletContext();
+		String uploadFileName = context2.getRealPath("/upload") + "/" + exFilename;
+		File uploadfile = new File(uploadFileName);
+		if (uploadfile.exists() && uploadfile.isFile()) {
+			uploadfile.delete(); // 파일 삭제
+		}
+
 		dao.update(new BoardDTO(null, num, writer, title, content, null, -1, -1, -1, -1, filename));
 		return new CommandAction(true, "qnalist.do?id=" + id);
 

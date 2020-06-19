@@ -84,7 +84,7 @@ public class DownloadAction implements Command{
             System.out.println("Download Error : downFile Error [" + downFile
                     + "]");
         }
-        return null;
+        return new CommandAction(false, null);
 
 	}
 
