@@ -32,8 +32,11 @@
 				<label class="form-check-label"> <input class="form-check-input" type="checkbox" name="remember"> 로그인 상태 유지
 				</label>
 			</div>
-			<button type="submit" class="btn btn-primary">로그인</button>
-			<a href="insertui.do" class="btn btn-secondary">회원가입</a>
+			<button type="submit" class="btn btn-primary btn-lg">로그인</button>
+			<a href="insertui.do" class="btn btn-secondary btn-lg">회원가입</a>
+			&nbsp;&nbsp;&nbsp;
+			<a href="findIdUi.do" class="btn btn-outline-info btn-sm"><strong>아이디 찾기</strong></a>
+			<a href="findPwUi.do" class="btn btn-outline-info btn-sm"><strong>비밀번호 찾기</strong></a>
 		</form>
 	</div>
 	<%@ include file="./com/footer.jsp" %>

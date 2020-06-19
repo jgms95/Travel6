@@ -256,6 +256,34 @@ public class MemberDAO {
 			closeAll(null, pstmt, conn);
 		}
 	}
+
+	public MemberDTO findId(String name, int age, String pw) { // id찾기
+		MemberDTO dto = new MemberDTO();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = "select id,name,age from travelmember where name = ? and age = ? and pw = ?";
+		ResultSet rs = null;
+		
+		try {
+			conn = dataFactory.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, name);
+			pstmt.setInt(2, age);
+			pstmt.setString(3, pw);
+			
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				dto.setId(rs.getString("id"));
+				dto.setName(rs.getString("name"));
+				dto.setAge(rs.getInt("age"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeAll(rs, pstmt, conn);
+		}
+		return dto;
+	}
 	
 	
 }

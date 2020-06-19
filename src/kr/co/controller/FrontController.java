@@ -38,6 +38,10 @@ public class FrontController extends HttpServlet {
 		map.put("/login.do", "kr.co.member.LoginCommand");
 		map.put("/logout.do", "kr.co.member.LogoutCommand");
 		map.put("/memberinfo.do", "kr.co.member.MemberinfoCommand");
+		map.put("/findIdUi.do", "kr.co.member.FindIdUICommand");
+		map.put("/findPwUi.do", "kr.co.member.FindPwUICommand");
+		map.put("/findId.do", "kr.co.member.FindIdCommand");
+		map.put("/findPw.do", "kr.co.member.FindPwCommand");
 		map.put("/qnaUpdateui.do", "kr.co.controller.QnaUpdateUICommand");
 		map.put("/qnaUpdate.do", "kr.co.controller.QnaUpdateCommand");
 		map.put("/qnalist.do", "kr.co.controller.ListPageCommand");
@@ -58,6 +62,7 @@ public class FrontController extends HttpServlet {
 		map.put("/replyComment.do","kr.co.controller.ReplyComCommand");
 		map.put("/updateComment.do", "kr.co.controller.UpdateComCommand");
 		map.put("/deleteComment.do", "kr.co.controller.DeleteComCommand");
+
 		
 		try {
 			com = (Command) Class.forName(map.get(sp)).newInstance();
