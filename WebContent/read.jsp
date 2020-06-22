@@ -15,21 +15,19 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </head>
 <script>
+	function onDownload(num) {
 
-function onDownload(num) {
+		var o = document.getElementById("ifrm_filedown");
 
-var o = document.getElementById("ifrm_filedown");
+		o.src = "download.do?num=" + num;
 
-o.src = "download.do?num=" + num;
-
-}
-
+	}
 </script>
 
 <body>
 	<%@ include file="./com/top.jsp"%>
 	<%@ include file="./com/navbar.jsp"%>
-<iframe id="ifrm_filedown"  style="position:absolute; z-index:1;visibility : hidden;"></iframe>
+	<iframe id="ifrm_filedown" style="position: absolute; z-index: 1; visibility: hidden;"></iframe>
 
 
 
@@ -49,8 +47,34 @@ o.src = "download.do?num=" + num;
 				<strong>질문 내용 :</strong>
 			</h5>
 			<h6>${dto.content}</h6>
-			<h5><a style="color: white;" href="#" onclick="onDownload('${dto.num}')"><strong>파일 :</strong> ${dto.filename} </a> </h5>
-			
+
+
+			<c:set var="fileName" value = "${dto.filename}"/>
+			<%
+				String file = (String)pageContext.getAttribute("fileName");
+				String filePath = "upload/" + file;
+				int pos = filePath.lastIndexOf(".");
+				String fileExt = filePath.substring(pos + 1);
+				fileExt = fileExt.toLowerCase();
+				request.setAttribute("fileExt", fileExt);
+				request.setAttribute("jpg", "jpg");
+				request.setAttribute("jpeg", "jpeg");
+				request.setAttribute("png", "png");
+			%>
+
+			<c:if test="${fileExt eq jpg or jpeg or png}">
+				<img alt="${dto.filename}" src="upload/${dto.filename}" class="img-thumbnail">
+			</c:if>
+
+
+
+
+
+			<h5>
+				<a style="color: white;" href="#" onclick="onDownload('${dto.num}')">
+					<strong>파일 :</strong> ${dto.filename}
+				</a>
+			</h5>
 
 
 
@@ -202,9 +226,8 @@ o.src = "download.do?num=" + num;
 								</div>
 								<form action="deleteComment.do" method="post" class="was-validated">
 
-									<input type="hidden" name="id" value="${param.id}"> <input type="hidden" name="num" value="${commentdto.num}">
-									<input type="hidden" name="qnanum" value="${commentdto.qnanum}">
-									<input type="hidden" name="repIndent" value="${commentdto.repIndent}">
+									<input type="hidden" name="id" value="${param.id}"> <input type="hidden" name="num" value="${commentdto.num}"> <input
+										type="hidden" name="qnanum" value="${commentdto.qnanum}"> <input type="hidden" name="repIndent" value="${commentdto.repIndent}">
 									<input type="hidden" name="repRoot" value="${commentdto.repRoot}">
 									<div class="modal-body">정말 삭제하시겠습니까?</div>
 									<div class="modal-footer">
@@ -239,9 +262,9 @@ o.src = "download.do?num=" + num;
 
 								<form action="replyComment.do" method="post" class="was-validated">
 
-									<input type="hidden" name="id" value="${param.id}"> <input type="hidden" name="num" value="${commentdto.num}">
-									<input type="hidden" name="qnanum" value="${commentdto.qnanum}"> <input type="hidden" name="writer" value="${writer}">
-									<input type="hidden" name="orgWriter" value="${commentdto.writer}">
+									<input type="hidden" name="id" value="${param.id}"> <input type="hidden" name="num" value="${commentdto.num}"> <input
+										type="hidden" name="qnanum" value="${commentdto.qnanum}"> <input type="hidden" name="writer" value="${writer}"> <input
+										type="hidden" name="orgWriter" value="${commentdto.writer}">
 									<div class="modal-body">
 
 

@@ -35,11 +35,11 @@ public class DownloadAction implements Command {
 			try {
 
 				long filesize = downFile.length();
-				
+
 				response.setContentType("application/x-msdownload");
 				response.setContentLength((int) filesize);
 				String strClient = request.getHeader("user-agent");
-				filename = new String(filename.getBytes(),"8859_1");
+				filename = new String(filename.getBytes(), "8859_1");
 				if (strClient.indexOf("MSIE 5.5") != -1) {
 					response.setHeader("Content-Disposition", "filename=" + filename + ";");
 				} else {
