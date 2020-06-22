@@ -114,7 +114,7 @@
 
 			</c:when>
 			<c:otherwise>
-				<a class="btn btn-secondary" href="replyui.do?num=${dto.num}&id=${param.id}">답변쓰기</a>
+				<a class="btn btn-secondary" href="replyui.do?num=${dto.num}&id=${param.id}">답글 쓰기</a>
 		|
 		<a class="btn btn-secondary" href="qnalist.do?id=${param.id}">목록</a>
 
@@ -183,74 +183,106 @@
 
 
 			<br>
-			<c:choose>
-				<c:when test="${commentdto.id eq param.id}">
+
+			<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#myModal${commentdto.num}">답변 달기</button>
+			<div class="modal fade" id="myModal${commentdto.num}">
+				<div class="modal-dialog modal-sm">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title">답변 달기</h4>
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+						</div>
+
+						<form action="replyComment.do" method="post" class="was-validated">
+
+							<input type="hidden" name="id" value="${param.id}"> <input type="hidden" name="num" value="${commentdto.num}"> <input
+								type="hidden" name="qnanum" value="${commentdto.qnanum}"> <input type="hidden" name="writer" value="${writer}"> <input
+								type="hidden" name="orgWriter" value="${commentdto.writer}">
+							<div class="modal-body">
 
 
-
-
-					<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#myModalupdate${commentdto.num}">수정</button>
-					<div class="modal fade" id="myModalupdate${commentdto.num}">
-						<div class="modal-dialog modal-sm">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h4 class="modal-title">댓글 수정</h4>
-									<button type="button" class="close" data-dismiss="modal">&times;</button>
+								<div class="form-group">
+									<label for="content">내용 : </label> <input type="text" class="form-control" placeholder="내용을 입력하세요." name="content" required>
+									<div class="valid-feedback">입력 완료</div>
+									<div class="invalid-feedback">정보를 입력해주세요.</div>
 								</div>
-								<form action="updateComment.do" method="post" class="was-validated">
-
-									<input type="hidden" name="id" value="${param.id}"> <input type="hidden" name="num" value="${commentdto.num}"> <input
-										type="hidden" name="qnanum" value="${commentdto.qnanum}"> <input type="hidden" name="writer" value="${writer}">
-									<div class="modal-body">
-
-										<div class="form-group">
-											<label for="content">내용 : </label> <input type="text" class="form-control" placeholder="내용을 입력하세요." name="content" required>
-											<div class="valid-feedback">입력 완료</div>
-											<div class="invalid-feedback">정보를 입력해주세요.</div>
-										</div>
-									</div>
-									<div class="modal-footer">
-										<button type="submit" class="btn btn-info">수정 완료</button>
-										<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
-									</div>
-								</form>
 							</div>
+							<div class="modal-footer">
+								<button type="submit" class="btn btn-info">작성완료</button>
+								<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+							</div>
+
+						</form>
+
+					</div>
+				</div>
+			</div>
+
+			<c:if test="${commentdto.id eq param.id}">
+
+
+
+
+				<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#myModalupdate${commentdto.num}">수정</button>
+				<div class="modal fade" id="myModalupdate${commentdto.num}">
+					<div class="modal-dialog modal-sm">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h4 class="modal-title">댓글 수정</h4>
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+							</div>
+							<form action="updateComment.do" method="post" class="was-validated">
+
+								<input type="hidden" name="id" value="${param.id}"> <input type="hidden" name="num" value="${commentdto.num}"> <input
+									type="hidden" name="qnanum" value="${commentdto.qnanum}"> <input type="hidden" name="writer" value="${writer}">
+								<div class="modal-body">
+
+									<div class="form-group">
+										<label for="content">내용 : </label> <input type="text" class="form-control" placeholder="내용을 입력하세요." name="content" required>
+										<div class="valid-feedback">입력 완료</div>
+										<div class="invalid-feedback">정보를 입력해주세요.</div>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="submit" class="btn btn-info">수정 완료</button>
+									<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+
+
+
+
+
+
+
+				<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#myModaldelete${commentdto.num}">삭제</button>
+				<div class="modal fade" id="myModaldelete${commentdto.num}">
+					<div class="modal-dialog modal-sm">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h4 class="modal-title">댓글 삭제</h4>
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+							</div>
+							<form action="deleteComment.do" method="post" class="was-validated">
+
+								<input type="hidden" name="id" value="${param.id}"> <input type="hidden" name="num" value="${commentdto.num}"> <input
+									type="hidden" name="qnanum" value="${commentdto.qnanum}"> <input type="hidden" name="repIndent" value="${commentdto.repIndent}">
+								<input type="hidden" name="repRoot" value="${commentdto.repRoot}">
+								<div class="modal-body">정말 삭제하시겠습니까?</div>
+								<div class="modal-footer">
+									<button type="submit" class="btn btn-info">예</button>
+									<button type="button" class="btn btn-danger" data-dismiss="modal">아니요</button>
+								</div>
+							</form>
 						</div>
 					</div>
 
+				</div>
 
-
-
-
-
-
-					<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#myModaldelete${commentdto.num}">삭제</button>
-					<div class="modal fade" id="myModaldelete${commentdto.num}">
-						<div class="modal-dialog modal-sm">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h4 class="modal-title">댓글 삭제</h4>
-									<button type="button" class="close" data-dismiss="modal">&times;</button>
-								</div>
-								<form action="deleteComment.do" method="post" class="was-validated">
-
-									<input type="hidden" name="id" value="${param.id}"> <input type="hidden" name="num" value="${commentdto.num}"> <input
-										type="hidden" name="qnanum" value="${commentdto.qnanum}"> <input type="hidden" name="repIndent" value="${commentdto.repIndent}">
-									<input type="hidden" name="repRoot" value="${commentdto.repRoot}">
-									<div class="modal-body">정말 삭제하시겠습니까?</div>
-									<div class="modal-footer">
-										<button type="submit" class="btn btn-info">예</button>
-										<button type="button" class="btn btn-danger" data-dismiss="modal">아니요</button>
-									</div>
-								</form>
-							</div>
-						</div>
-
-					</div>
-
-				</c:when>
-
-				<c:otherwise>
+			</c:if>
 
 
 
@@ -259,46 +291,11 @@
 
 
 
-					<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#myModal${commentdto.num}">답변 달기</button>
-					<div class="modal fade" id="myModal${commentdto.num}">
-						<div class="modal-dialog modal-sm">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h4 class="modal-title">답변 달기</h4>
-									<button type="button" class="close" data-dismiss="modal">&times;</button>
-								</div>
-
-								<form action="replyComment.do" method="post" class="was-validated">
-
-									<input type="hidden" name="id" value="${param.id}"> <input type="hidden" name="num" value="${commentdto.num}"> <input
-										type="hidden" name="qnanum" value="${commentdto.qnanum}"> <input type="hidden" name="writer" value="${writer}"> <input
-										type="hidden" name="orgWriter" value="${commentdto.writer}">
-									<div class="modal-body">
-
-
-										<div class="form-group">
-											<label for="content">내용 : </label> <input type="text" class="form-control" placeholder="내용을 입력하세요." name="content" required>
-											<div class="valid-feedback">입력 완료</div>
-											<div class="invalid-feedback">정보를 입력해주세요.</div>
-										</div>
-									</div>
-									<div class="modal-footer">
-										<button type="submit" class="btn btn-info">작성완료</button>
-										<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
-									</div>
-
-								</form>
-
-							</div>
-						</div>
-					</div>
 
 
 
 
-				</c:otherwise>
 
-			</c:choose>
 
 			<hr>
 
