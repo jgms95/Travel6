@@ -27,22 +27,19 @@ public class DownloadAction implements Command {
 		BoardDTO article = dao.read(num);
 
 		String filename = article.getFilename();
-
 		ServletContext context = request.getSession().getServletContext();
 		String uploadFileName = context.getRealPath("/upload") + "/" + filename;
-
 		File downFile = new File(uploadFileName);
-
 		if (downFile.exists() && downFile.isFile()) {
 
 			try {
 
 				long filesize = downFile.length();
-
+				
 				response.setContentType("application/x-msdownload");
 				response.setContentLength((int) filesize);
 				String strClient = request.getHeader("user-agent");
-
+				filename = new String(filename.getBytes(),"8859_1");
 				if (strClient.indexOf("MSIE 5.5") != -1) {
 					response.setHeader("Content-Disposition", "filename=" + filename + ";");
 				} else {
@@ -56,7 +53,6 @@ public class DownloadAction implements Command {
 				byte b[] = new byte[1024];
 
 				BufferedInputStream fin = new BufferedInputStream(new FileInputStream(downFile));
-
 				BufferedOutputStream outs = new BufferedOutputStream(response.getOutputStream());
 
 				int read = 0;
