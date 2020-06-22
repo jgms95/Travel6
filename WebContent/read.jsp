@@ -99,7 +99,7 @@
 		<c:choose>
 
 			<c:when test="${dto.id eq param.id}">
-				<a class="btn btn-warning" href="qnaUpdateui.do?num=${dto.num}&id=${param.id}&writer=${dto.writer}">수정</a>
+				<a class="btn btn-warning" href="qnaUpdateui.do?num=${dto.num}&id=${param.id}&writer=${writer}">수정</a>
 		|
 		<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">삭제</button>
 				<div class="modal fade" id="myModal">

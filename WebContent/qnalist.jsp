@@ -54,6 +54,7 @@
 					<th>번호</th>
 					<th>제목</th>
 					<th>글쓴이</th>
+					<th>ID</th>
 					<th>작성일</th>
 					<th>조회수</th>
 				</tr>
@@ -82,6 +83,7 @@
 						</td>
 
 						<td>${dto.writer}</td>
+						<td>${dto.id}</td>
 						<td>${dto.writeday}</td>
 						<td>${dto.readcnt}</td>
 					</tr>

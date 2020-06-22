@@ -15,9 +15,8 @@ import kr.co.domain.BoardDTO;
 import kr.co.domain.PageTO;
 import kr.co.domain.QnaCommandDTO;
 
-
 public class BoardDAO {
-	
+
 	private DataSource dataFactory;
 
 	public BoardDAO() {
@@ -28,26 +27,25 @@ public class BoardDAO {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void closeAll(ResultSet rs, PreparedStatement pstmt, Connection conn) {
-	try {
-		if(rs!=null) {
-			rs.close();
+		try {
+			if (rs != null) {
+				rs.close();
+			}
+			if (pstmt != null) {
+				pstmt.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		if(pstmt!=null) {
-			pstmt.close();
-		}
-		if(conn!=null) {
-			conn.close();
-		}
-	} catch (Exception e) {
-		e.printStackTrace();
-	}
 	}
 
-	
 	public PageTO page(int curPage) {
-		String sql = "select * from (select rownum rnum, num, title, writer, writeday, readcnt, repIndent from (select * from qnaboard order by repRoot desc, repStep asc))  where rnum>=? and rnum<=?";
+		String sql = "select * from (select rownum rnum, id, num, title, writer, writeday, readcnt, repIndent from (select * from qnaboard order by repRoot desc, repStep asc))  where rnum>=? and rnum<=?";
 		PageTO to = new PageTO(curPage);
 		List<BoardDTO> list = new ArrayList<BoardDTO>();
 		Connection conn = null;
@@ -60,32 +58,31 @@ public class BoardDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, to.getStartNum());
 			pstmt.setInt(2, to.getEndNum());
-			
-			rs = pstmt.executeQuery();
-			while(rs.next()) {
 
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				String id = rs.getString("id");
 				int num = rs.getInt("num");
 				String title = rs.getString("title");
 				String writer = rs.getString("writer");
 				String writeday = rs.getString("writeday");
 				int readcnt = rs.getInt("readcnt");
 				int repIndent = rs.getInt("repIndent");
-				BoardDTO dto = new BoardDTO(null, num, writer, title, null, writeday, readcnt, -1, -1, repIndent);
+				BoardDTO dto = new BoardDTO(id, num, writer, title, null, writeday, readcnt, -1, -1, repIndent);
 				list.add(dto);
 			}
 			to.setList(list);
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			closeAll(rs, pstmt, conn);
 		}
-		
-		
+
 		return to;
 	}
-	
-	private int getAmount(Connection conn) { //글 갯수
+
+	private int getAmount(Connection conn) { // 글 갯수
 		int amount = 0;
 		PreparedStatement pstmt = null;
 		String sql = "select count(num) from qnaboard";
@@ -93,27 +90,27 @@ public class BoardDAO {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
 				amount = rs.getInt(1);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			closeAll(rs, pstmt, null);
 		}
 		return amount;
 	}
 
-	public void insert(BoardDTO boardDTO) { //글 작성
+	public void insert(BoardDTO boardDTO) { // 글 작성
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		String sql = "insert into qnaboard (id, num, writer, title, content, repRoot, repStep, repIndent, filename) values (?,?,?,?,?,?,?,?,?)";
 		try {
-			
+
 			conn = dataFactory.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			int num = createNum(conn);
-			
+
 			pstmt.setString(1, boardDTO.getId());
 			pstmt.setInt(2, num);
 			pstmt.setString(3, boardDTO.getWriter());
@@ -123,36 +120,36 @@ public class BoardDAO {
 			pstmt.setInt(7, 0);
 			pstmt.setInt(8, 0);
 			pstmt.setString(9, boardDTO.getFilename());
-			
+
 			pstmt.executeUpdate();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			closeAll(null, pstmt, conn);
 		}
 	}
-	
+
 	private int createNum(Connection conn) {
 		PreparedStatement pstmt = null;
 		String sql = "select max(num) from qnaboard";
 		ResultSet rs = null;
 		Integer num = null;
-		
+
 		try {
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
-			
-			if(rs.next()) {
+
+			if (rs.next()) {
 				num = rs.getInt(1);
-				num+=1;
-				
+				num += 1;
+
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return num;
 	}
 
@@ -163,16 +160,16 @@ public class BoardDAO {
 		String sql = "select * from qnaboard where num = ?";
 		ResultSet rs = null;
 		boolean isOk = false;
-		
+
 		try {
 			conn = dataFactory.getConnection();
-			conn.setAutoCommit(false);  
-			increaseReadCnt(conn, number); //조회수 증가시키기
-			
+			conn.setAutoCommit(false);
+			increaseReadCnt(conn, number); // 조회수 증가시키기
+
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, number);
 			rs = pstmt.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
 				String id = rs.getString("id");
 				String content = rs.getString("content");
 				String writer = rs.getString("writer");
@@ -180,29 +177,30 @@ public class BoardDAO {
 				String writeday = rs.getString("writeday");
 				int readcnt = rs.getInt("readcnt");
 				String filename = rs.getString("filename");
-				dto = new BoardDTO(id, number, writer, title, content, writeday, readcnt, 0, 0, 0,filename);
+				dto = new BoardDTO(id, number, writer, title, content, writeday, readcnt, 0, 0, 0, filename);
 				isOk = true;
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {try {
-			if(isOk) {
-				conn.commit();
-			}else {
-				conn.rollback();
-			}
+		} finally {
+			try {
+				if (isOk) {
+					conn.commit();
+				} else {
+					conn.rollback();
+				}
 			} catch (Exception e2) {
 				e2.printStackTrace();
 			}
-			
+
 			closeAll(rs, pstmt, conn);
 		}
 		return dto;
-		
+
 	}
-	
-	private void increaseReadCnt(Connection conn, int num) { //조회수 증가시키기
+
+	private void increaseReadCnt(Connection conn, int num) { // 조회수 증가시키기
 		PreparedStatement pstmt = null;
 		String sql = "update qnaboard set readcnt = readcnt + 1 where num = ?";
 		try {
@@ -211,10 +209,10 @@ public class BoardDAO {
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			closeAll(null, pstmt, null);
 		}
-		
+
 	}
 
 	public BoardDTO updateUI(int number) {
@@ -223,58 +221,56 @@ public class BoardDAO {
 		PreparedStatement pstmt = null;
 		String sql = "select * from qnaboard where num = ?";
 		ResultSet rs = null;
-		
-		
+
 		try {
 			conn = dataFactory.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, number);
 			rs = pstmt.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
 				String writer = rs.getString("writer");
 				String title = rs.getString("title");
 				String content = rs.getString("content");
-				
-				
-				int repRoot = rs.getInt("repRoot"); 
+
+				int repRoot = rs.getInt("repRoot");
 				int repStep = rs.getInt("repStep");
 				int repIndent = rs.getInt("repIndent");
-				
+
 				dto = new BoardDTO(null, number, writer, title, content, null, 0, repRoot, repStep, repIndent);
-				
+
 			}
-	
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {		
+		} finally {
 			closeAll(rs, pstmt, conn);
 		}
 		return dto;
-		
+
 	}
 
 	public void update(BoardDTO dto) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		String sql = "update qnaboard set title= ?, content=?, filename=? where num = ?";
+		String sql = "update qnaboard set title= ?, content=?, filename=?, writer=? where num = ?";
 		try {
-			
+
 			conn = dataFactory.getConnection();
 			pstmt = conn.prepareStatement(sql);
-			
-			pstmt.setString(1,dto.getTitle());
+
+			pstmt.setString(1, dto.getTitle());
 			pstmt.setString(2, dto.getContent());
 			pstmt.setString(3, dto.getFilename());
-			pstmt.setInt(4, dto.getNum());
+			pstmt.setString(4, dto.getWriter());
+			pstmt.setInt(5, dto.getNum());
 			pstmt.executeUpdate();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			closeAll(null, pstmt, conn);
 		}
-		
+
 	}
 
 	public void delete(int num) {
@@ -282,34 +278,34 @@ public class BoardDAO {
 		PreparedStatement pstmt = null;
 		String sql = "delete from qnaboard where num = ?";
 		try {
-			
+
 			conn = dataFactory.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, num);
-			
+
 			pstmt.executeUpdate();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			closeAll(null, pstmt, conn);
 		}
 	}
-	
+
 	public void deleteRelatedcom(int num) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		String sql = "delete from qnacomment where qnanum = ?";
 		try {
-			
+
 			conn = dataFactory.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, num);
 			pstmt.executeUpdate();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			closeAll(null, pstmt, conn);
 		}
 	}
@@ -318,48 +314,48 @@ public class BoardDAO {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		String sql = "insert into qnaboard (id, num,writer,title,content,repRoot,repStep,repIndent,filename) values (?,?,?,?,?,?,?,?,?)";
-		
+
 		boolean isOk = false;
-		
+
 		try {
 			conn = dataFactory.getConnection();
 			conn.setAutoCommit(false);
-			
-			int num  = createNum(conn);
-			BoardDTO orgDTO = updateUI(orgnum); 
-			stepPlus(conn,orgDTO);
-			
+
+			int num = createNum(conn);
+			BoardDTO orgDTO = updateUI(orgnum);
+			stepPlus(conn, orgDTO);
+
 			pstmt = conn.prepareStatement(sql);
-			
+
 			pstmt.setString(1, dto.getId());
 			pstmt.setInt(2, num);
 			pstmt.setString(3, dto.getWriter());
-			pstmt.setString(4,dto.getTitle());
+			pstmt.setString(4, dto.getTitle());
 			pstmt.setString(5, dto.getContent());
 			pstmt.setInt(6, orgDTO.getRepRoot());
-			pstmt.setInt(7, orgDTO.getRepStep()+1);
-			pstmt.setInt(8, orgDTO.getRepIndent()+1);
+			pstmt.setInt(7, orgDTO.getRepStep() + 1);
+			pstmt.setInt(8, orgDTO.getRepIndent() + 1);
 			pstmt.setString(9, dto.getFilename());
 			pstmt.executeUpdate();
-			
+
 			isOk = true;
 		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			try {
-				if(isOk) {
+				if (isOk) {
 					conn.commit();
-				}else {
+				} else {
 					conn.rollback();
 				}
-		} catch (Exception e2) {
-			e2.printStackTrace();
-		}
-			
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+
 			closeAll(null, pstmt, conn);
 		}
 	}
-	
+
 	private void stepPlus(Connection conn, BoardDTO orgDTO) {
 		PreparedStatement pstmt = null;
 		String sql = "update qnaboard set repStep = repStep + 1 where repRoot = ? and repStep > ?";
@@ -370,26 +366,29 @@ public class BoardDAO {
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
-			closeAll(null, pstmt, null); 
+		} finally {
+			closeAll(null, pstmt, null);
 		}
-		
+
 	}
 
 	public List<BoardDTO> getAskRepRoots(String id) {
-		String sql = "select * from qnaboard where repRoot in (select repRoot from qnaboard where id = ? and repIndent = 0 ) order by repRoot desc, repStep asc"; //본인이 작성한 글의 repRoot값 가져오기
+		String sql = "select * from qnaboard where repRoot in (select repRoot from qnaboard where id = ? and repIndent = 0 ) order by repRoot desc, repStep asc"; // 본인이
+																																									// 작성한
+																																									// 글의
+																																									// repRoot값
+																																									// 가져오기
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		List<BoardDTO> list = new ArrayList<BoardDTO>();
-		
-		
+
 		try {
 			conn = dataFactory.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();
-			while(rs.next()) {
+			while (rs.next()) {
 				int num = rs.getInt("num");
 				String rid = rs.getString("id");
 				String writer = rs.getString("writer");
@@ -397,39 +396,34 @@ public class BoardDAO {
 				String writeday = rs.getString("writeday");
 				int readcnt = rs.getInt("readcnt");
 				int repIndent = rs.getInt("repIndent");
-				BoardDTO dto = new BoardDTO(rid, num, writer, title, null, writeday, readcnt,-1, -1, repIndent);
+				BoardDTO dto = new BoardDTO(rid, num, writer, title, null, writeday, readcnt, -1, -1, repIndent);
 				list.add(dto);
 			}
-			
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			closeAll(rs, pstmt, conn);
 		}
 		return list;
-		
-		
+
 	}
 
-	
-
 	public List<BoardDTO> getReplyRepRoots(String id) {
-		String sql = "select * from qnaboard where repRoot in (" + 
-				"	select repRoot from qnaboard where repIndent > 0 and id = ?" + 
-				") order by repRoot desc, repStep asc"; //본인이 작성한 글의 repRoot값 가져오기
+		String sql = "select * from qnaboard where repRoot in ("
+				+ "	select repRoot from qnaboard where repIndent > 0 and id = ?"
+				+ ") order by repRoot desc, repStep asc"; // 본인이 작성한 글의 repRoot값 가져오기
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		List<BoardDTO> list = new ArrayList<BoardDTO>();
-		
-		
+
 		try {
 			conn = dataFactory.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();
-			while(rs.next()) {
+			while (rs.next()) {
 				String rid = rs.getString("id");
 				int num = rs.getInt("num");
 				String writer = rs.getString("writer");
@@ -441,26 +435,25 @@ public class BoardDAO {
 				BoardDTO dto = new BoardDTO(rid, num, writer, title, null, writeday, readcnt, -1, -1, repIndent);
 				list.add(dto);
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			closeAll(rs, pstmt, conn);
 		}
 		return list;
 	}
-
 
 	public void insertQnaCom(QnaCommandDTO dto, int number) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		String sql = "insert into qnacomment (id, qnanum, num, writer, content, repRoot, repStep, repIndent) values (?,?,?,?,?,?,?,?)";
 		try {
-			
+
 			conn = dataFactory.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			int num = createNum2(conn);
-			
+
 			pstmt.setString(1, dto.getId());
 			pstmt.setInt(2, number);
 			pstmt.setInt(3, num);
@@ -469,38 +462,37 @@ public class BoardDAO {
 			pstmt.setInt(6, num);
 			pstmt.setInt(7, 0);
 			pstmt.setInt(8, 0);
-			
+
 			pstmt.executeUpdate();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			closeAll(null, pstmt, conn);
 		}
-		
+
 	}
-	
-	
+
 	private int createNum2(Connection conn) {
 		PreparedStatement pstmt = null;
 		String sql = "select max(num) from qnacomment";
 		ResultSet rs = null;
 		Integer num = null;
-		
+
 		try {
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
-			
-			if(rs.next()) {
+
+			if (rs.next()) {
 				num = rs.getInt(1);
-				num+=1;
-				
+				num += 1;
+
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return num;
 	}
 
@@ -515,7 +507,7 @@ public class BoardDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, number);
 			rs = pstmt.executeQuery();
-			while(rs.next()) {
+			while (rs.next()) {
 				String id = rs.getString("id");
 				int num = rs.getInt("num");
 				String writer = rs.getString("writer");
@@ -524,17 +516,17 @@ public class BoardDAO {
 				int repRoot = rs.getInt("repRoot");
 				int repIndent = rs.getInt("repIndent");
 				String orgWriter = rs.getString("orgWriter");
-				QnaCommandDTO dto = new QnaCommandDTO(id, number, num, writer, content, writeday, repRoot, -1, repIndent,orgWriter);
+				QnaCommandDTO dto = new QnaCommandDTO(id, number, num, writer, content, writeday, repRoot, -1,
+						repIndent, orgWriter);
 				list.add(dto);
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			closeAll(rs, pstmt, conn);
 		}
-		
-		
+
 		return list;
 	}
 
@@ -542,92 +534,86 @@ public class BoardDAO {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		String sql = "insert into qnacomment (id, qnanum,num,writer,content,repRoot,repStep,repIndent,orgWriter) values (?,?,?,?,?,?,?,?,?)";
-		
+
 		boolean isOk = false;
-		
+
 		try {
 			conn = dataFactory.getConnection();
 			conn.setAutoCommit(false);
-			
-			int num  = createNum2(conn);
-			QnaCommandDTO orgDTO = updateUI2(orgnum); 
-			stepPlus2(conn,orgDTO);
-			
+
+			int num = createNum2(conn);
+			QnaCommandDTO orgDTO = updateUI2(orgnum);
+			stepPlus2(conn, orgDTO);
+
 			pstmt = conn.prepareStatement(sql);
-			
+
 			pstmt.setString(1, dto.getId());
 			pstmt.setInt(2, dto.getQnanum());
 			pstmt.setInt(3, num);
 			pstmt.setString(4, dto.getWriter());
 			pstmt.setString(5, dto.getContent());
 			pstmt.setInt(6, orgDTO.getRepRoot());
-			pstmt.setInt(7, orgDTO.getRepStep()+1);
-			pstmt.setInt(8, orgDTO.getRepIndent()+1);
+			pstmt.setInt(7, orgDTO.getRepStep() + 1);
+			pstmt.setInt(8, orgDTO.getRepIndent() + 1);
 			pstmt.setString(9, dto.getOrgWriter());
 			pstmt.executeUpdate();
-			
+
 			isOk = true;
 		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			try {
-				if(isOk) {
+				if (isOk) {
 					conn.commit();
-				}else {
+				} else {
 					conn.rollback();
 				}
-		} catch (Exception e2) {
-			e2.printStackTrace();
-		}
-			
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+
 			closeAll(null, pstmt, conn);
 		}
-		
+
 	}
 
-	
 	public QnaCommandDTO updateUI2(int number) {
 		QnaCommandDTO dto = null;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		String sql = "select * from qnacomment where num = ?";
 		ResultSet rs = null;
-		
-		
+
 		try {
 			conn = dataFactory.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, number);
 			rs = pstmt.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
 				String writer = rs.getString("writer");
 				String content = rs.getString("content");
-				
-				
-				int repRoot = rs.getInt("repRoot"); 
+
+				int repRoot = rs.getInt("repRoot");
 				int repStep = rs.getInt("repStep");
 				int repIndent = rs.getInt("repIndent");
-				
-				dto = new QnaCommandDTO(null, -1, number, writer, content, null, repRoot, repStep, repIndent,null);
-				
+
+				dto = new QnaCommandDTO(null, -1, number, writer, content, null, repRoot, repStep, repIndent, null);
+
 			}
-	
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {		
+		} finally {
 			closeAll(rs, pstmt, conn);
 		}
 		return dto;
-		
+
 	}
-	
-	
-	
+
 	private void stepPlus2(Connection conn, QnaCommandDTO orgDTO) {
 		PreparedStatement pstmt = null;
 		String sql = "update qnacomment set repStep = repStep + 1 where repRoot = ? and repStep > ?";
-		
+
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, orgDTO.getRepRoot());
@@ -635,10 +621,10 @@ public class BoardDAO {
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
-			closeAll(null, pstmt, null); 
+		} finally {
+			closeAll(null, pstmt, null);
 		}
-		
+
 	}
 
 	public void updateComment(QnaCommandDTO dto) {
@@ -646,21 +632,21 @@ public class BoardDAO {
 		PreparedStatement pstmt = null;
 		String sql = "update qnacomment set writer= ?, content=? where num = ?";
 		try {
-			
+
 			conn = dataFactory.getConnection();
 			pstmt = conn.prepareStatement(sql);
-			
+
 			pstmt.setString(1, dto.getWriter());
 			pstmt.setString(2, dto.getContent());
 			pstmt.setInt(3, dto.getNum());
 			pstmt.executeUpdate();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			closeAll(null, pstmt, conn);
 		}
-		
+
 	}
 
 	public void deleteComment(int num) {
@@ -668,16 +654,16 @@ public class BoardDAO {
 		PreparedStatement pstmt = null;
 		String sql = "delete from qnacomment where num = ?";
 		try {
-			
+
 			conn = dataFactory.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, num);
-			
+
 			pstmt.executeUpdate();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			closeAll(null, pstmt, conn);
 		}
 	}
@@ -687,17 +673,17 @@ public class BoardDAO {
 		PreparedStatement pstmt = null;
 		String sql = "delete from qnacomment where qnanum = ? and repRoot = ?";
 		try {
-			
+
 			conn = dataFactory.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, qnanum);
 			pstmt.setInt(2, repRoot);
-			
+
 			pstmt.executeUpdate();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			closeAll(null, pstmt, conn);
 		}
 	}
@@ -707,70 +693,65 @@ public class BoardDAO {
 		PreparedStatement pstmt = null;
 		String sql = "update qnaboard set readcnt = readcnt - 1 where num = ? ";
 		try {
-			
+
 			conn = dataFactory.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, num);
 			pstmt.executeUpdate();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			closeAll(null, pstmt, conn);
 		}
 	}
 
-public int countComments(int number) {
-	int count = 0;
-	Connection conn = null;
-	PreparedStatement pstmt = null;
-	String sql = "select count(*) from qnacomment where qnanum = ?";
-	ResultSet rs = null;
-	
-	
-	try {
-		conn = dataFactory.getConnection();
-		pstmt = conn.prepareStatement(sql);
-		pstmt.setInt(1, number);
-		rs = pstmt.executeQuery();
-		if(rs.next()) {
-			count = rs.getInt(1);
+	public int countComments(int number) {
+		int count = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = "select count(*) from qnacomment where qnanum = ?";
+		ResultSet rs = null;
+
+		try {
+			conn = dataFactory.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, number);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				count = rs.getInt(1);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeAll(rs, pstmt, conn);
 		}
-
-		
-	} catch (Exception e) {
-		e.printStackTrace();
-	}finally {		
-		closeAll(rs, pstmt, conn);
+		return count;
 	}
-	return count;
-}
 
-public String getWriter(String id) {
-	String writer = null;
-	Connection conn = null;
-	PreparedStatement pstmt = null;
-	String sql = "select name from travelMember where id = ?";
-	ResultSet rs = null;
-	
-	
-	try {
-		conn = dataFactory.getConnection();
-		pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, id);
-		rs = pstmt.executeQuery();
-		if(rs.next()) {
-			writer = rs.getString(1);
+	public String getWriter(String id) {
+		String writer = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = "select name from travelMember where id = ?";
+		ResultSet rs = null;
+
+		try {
+			conn = dataFactory.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				writer = rs.getString(1);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeAll(rs, pstmt, conn);
 		}
-
-		
-	} catch (Exception e) {
-		e.printStackTrace();
-	}finally {		
-		closeAll(rs, pstmt, conn);
+		return writer;
 	}
-	return writer;
-}
-	
-	
+
 }
