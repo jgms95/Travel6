@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="kr.co.dao.BoardDAO"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fm"%>
@@ -49,9 +50,9 @@
 			<h6>${dto.content}</h6>
 
 
-			<c:set var="fileName" value = "${dto.filename}"/>
+			<c:set var="fileName" value="${dto.filename}" />
 			<%
-				String file = (String)pageContext.getAttribute("fileName");
+				String file = (String) pageContext.getAttribute("fileName");
 				String filePath = "upload/" + file;
 				int pos = filePath.lastIndexOf(".");
 				String fileExt = filePath.substring(pos + 1);
@@ -68,7 +69,7 @@
 
 
 
-
+			<br> <br>
 
 			<h5>
 				<a style="color: white;" href="#" onclick="onDownload('${dto.num}')">
@@ -116,6 +117,8 @@
 				<a class="btn btn-secondary" href="replyui.do?num=${dto.num}&id=${param.id}">답변쓰기</a>
 		|
 		<a class="btn btn-secondary" href="qnalist.do?id=${param.id}">목록</a>
+
+
 			</c:otherwise>
 		</c:choose>
 
@@ -148,10 +151,16 @@
 		<br>
 
 
-
+		<c:set var="num" value="${dto.num}" />
+		<%
+			int number = (Integer) pageContext.getAttribute("num");
+			BoardDAO dao = new BoardDAO();
+			int count = dao.countComments(number);
+			request.setAttribute("count", count);
+		%>
 
 		<h5>
-			<strong>댓글 목록</strong>
+			<strong>댓글 목록 [${count}] </strong>
 		</h5>
 		<c:forEach items="${commentlist}" var="commentdto">
 

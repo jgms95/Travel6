@@ -12,6 +12,8 @@ repIndent number(4),
 filename varchar2(100)
 )
 
+select count(*) from qnacomment where qnanum = 8
+
 create table travelMember (
 	id varchar2(21) primary key, 
 	name varchar2(21) not null, 

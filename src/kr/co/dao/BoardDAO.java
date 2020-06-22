@@ -720,7 +720,31 @@ public class BoardDAO {
 		}
 	}
 
+public int countComments(int number) {
+	int count = 0;
+	Connection conn = null;
+	PreparedStatement pstmt = null;
+	String sql = "select count(*) from qnacomment where qnanum = ?";
+	ResultSet rs = null;
+	
+	
+	try {
+		conn = dataFactory.getConnection();
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, number);
+		rs = pstmt.executeQuery();
+		if(rs.next()) {
+			count = rs.getInt(1);
+		}
 
+		
+	} catch (Exception e) {
+		e.printStackTrace();
+	}finally {		
+		closeAll(rs, pstmt, conn);
+	}
+	return count;
+}
 	
 	
 }

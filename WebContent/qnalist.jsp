@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="kr.co.dao.BoardDAO"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fm"%>
@@ -40,11 +41,11 @@
 			<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">나의 Q&amp;A</button>
 			<div class="dropdown-menu">
 				<a class="dropdown-item" href="asklist.do?id=${param.id}">나의 질문 목록</a>
-				 <div class="dropdown-divider"></div>
+				<div class="dropdown-divider"></div>
 				<a class="dropdown-item" href="replylist.do?id=${param.id}">나의 답변 목록</a>
 			</div>
 		</div>
-		<br> 
+		<br>
 
 		<table class="table table-hover">
 
@@ -62,10 +63,21 @@
 				<c:forEach items="${list}" var="dto">
 					<tr>
 						<td>${dto.num}</td>
+
+
+						<c:set var="num" value="${dto.num}" />
+						<%
+							int number = (Integer) pageContext.getAttribute("num");
+								BoardDAO dao = new BoardDAO();
+								int count = dao.countComments(number);
+								request.setAttribute("count", count);
+						%>
 						<td width="300px">
 
 							<c:forEach begin="1" end="${dto.repIndent}">&nbsp;&nbsp;</c:forEach>
-							<a style="color: rgb(34,141,168);" href="read.do?num=${dto.num}&id=${param.id}"><strong>${dto.title}</strong></a>
+							<a href="read.do?num=${dto.num}&id=${param.id}">
+								<strong style="color: rgb(34, 141, 168);">${dto.title}</strong> <strong style="color: rgb(240, 70, 74);">[${count}]</strong>
+							</a>
 
 						</td>
 
