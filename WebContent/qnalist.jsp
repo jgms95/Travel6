@@ -38,7 +38,7 @@
 
 
 		<div class="dropdown">
-			<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">나의 Q&amp;A</button>
+			<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">나의 Q&amp;A로 가기</button>
 			<div class="dropdown-menu">
 				<a class="dropdown-item" href="asklist.do?id=${param.id}">나의 질문 목록</a>
 				<div class="dropdown-divider"></div>
@@ -75,8 +75,8 @@
 						<td width="300px">
 
 							<c:forEach begin="1" end="${dto.repIndent}">&nbsp;&nbsp;</c:forEach>
-							<a href="read.do?num=${dto.num}&id=${param.id}">
-								<strong style="color: rgb(34, 141, 168);">${dto.title}</strong> <strong style="color: rgb(240, 70, 74);">[${count}]</strong>
+							<a style="color: rgb(79,79,79);" href="read.do?num=${dto.num}&id=${param.id}">
+								<strong>${dto.title}</strong> <strong style="color: rgb(240, 70, 74);">[${count}]</strong>
 							</a>
 
 						</td>

@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="kr.co.dao.BoardDAO"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fm"%>
@@ -35,7 +36,7 @@
 
 		<table class="table table-hover">
 
-			<thead class="thead-dark">
+			<thead class="thead-light">
 				<tr>
 					<th>번호</th>
 					<th>제목</th>
@@ -50,17 +51,27 @@
 				<c:forEach items="${list}" var="dto">
 					<tr>
 						<td>${dto.num}</td>
+						<c:set var="num" value="${dto.num}" />
+						<%
+							int number = (Integer) pageContext.getAttribute("num");
+								BoardDAO dao = new BoardDAO();
+								int count = dao.countComments(number);
+								request.setAttribute("count", count);
+						%>
 						<td width="300px">
 							<c:forEach begin="1" end="${dto.repIndent}">
-								<!-- 들여쓰기 -->
+								
 &nbsp;&nbsp;
 </c:forEach>
 							<c:choose>
 								<c:when test="${dto.id eq param.id}">
-									<a class="btn btn-info" style="color: white;"  href="read.do?num=${dto.num}&id=${param.id}"><strong>${dto.title}</strong></a>
+									<a href="read.do?num=${dto.num}&id=${param.id}">
+									<strong style = "background-color:rgb(87,87,87); color : white;">&nbsp;${dto.title}&nbsp;</strong>
+									<strong style="color: rgb(240, 70, 74);">[${count}]</strong></a>
 								</c:when>
 								<c:otherwise>
-									<a style="color: rgb(28,113,134);" href="read.do?num=${dto.num}&id=${param.id}">${dto.title}</a>
+									<a style="color: rgb(79,79,79);" href="read.do?num=${dto.num}&id=${param.id}"><strong>${dto.title}</strong>
+									<strong style="color: rgb(240, 70, 74);">[${count}]</strong></a>
 								</c:otherwise>
 							</c:choose>
 						</td>
