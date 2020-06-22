@@ -148,8 +148,6 @@
 		</form>
 		<hr>
 
-		<br>
-
 
 		<c:set var="num" value="${dto.num}" />
 		<%
@@ -162,6 +160,7 @@
 		<h5>
 			<strong>댓글 목록 [${count}] </strong>
 		</h5>
+		<br>
 		<c:forEach items="${commentlist}" var="commentdto">
 
 			<c:if test="${commentdto.repIndent>0}">
