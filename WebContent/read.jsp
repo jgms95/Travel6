@@ -38,6 +38,19 @@
 		<h2 style="background-color: rgb(55, 55, 55); color: white;">${dto.title}</h2>
 		<p>글번호: ${dto.num}&nbsp;&nbsp;&nbsp;조회수: ${dto.readcnt}</p>
 
+
+		<div class="dropdown">
+			<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">${dto.writer}님의 게시글 더 보기</button>
+			<div class="dropdown-menu">
+				<a class="dropdown-item" href="asklist.do?id=${dto.id}">${dto.writer}님의 질문 목록</a>
+				<div class="dropdown-divider"></div>
+				<a class="dropdown-item" href="replylist.do?id=${dto.id}">${dto.writer}님의 답변 목록</a>
+			</div>
+		</div>
+
+		<br>
+
+
 		<div class="jumbotron" style="background-color: rgb(128, 128, 191); color: white;">
 
 
@@ -117,8 +130,6 @@
 				<a class="btn btn-secondary" href="replyui.do?num=${dto.num}&id=${param.id}">답글 쓰기</a>
 		|
 		<a class="btn btn-secondary" href="qnalist.do?id=${param.id}">목록</a>
-
-
 			</c:otherwise>
 		</c:choose>
 

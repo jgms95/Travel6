@@ -20,11 +20,13 @@ public class MyReplyListCommand implements Command {
 		BoardDAO dao = new BoardDAO();
 
 		List<BoardDTO> list = dao.getReplyRepRoots(id);// repRoot 리스트
-	
+		String writer = dao.getWriter(id);
+
+		request.setAttribute("writer", writer);
+
 		request.setAttribute("list", list);
 
 		return new CommandAction(false, "replylist.jsp");
 	}
 
-	
 }

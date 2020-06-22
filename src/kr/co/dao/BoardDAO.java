@@ -745,6 +745,32 @@ public int countComments(int number) {
 	}
 	return count;
 }
+
+public String getWriter(String id) {
+	String writer = null;
+	Connection conn = null;
+	PreparedStatement pstmt = null;
+	String sql = "select name from travelMember where id = ?";
+	ResultSet rs = null;
+	
+	
+	try {
+		conn = dataFactory.getConnection();
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, id);
+		rs = pstmt.executeQuery();
+		if(rs.next()) {
+			writer = rs.getString(1);
+		}
+
+		
+	} catch (Exception e) {
+		e.printStackTrace();
+	}finally {		
+		closeAll(rs, pstmt, conn);
+	}
+	return writer;
+}
 	
 	
 }

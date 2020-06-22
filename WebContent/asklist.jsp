@@ -21,13 +21,13 @@
 	<%@ include file="./com/top.jsp"%>
 	<%@ include file="./com/navbar.jsp"%>
 	<div class="container" style="margin: 30px auto 30px auto;">
-		<h1>My Questions</h1>
-		<h5>${param.id} 회원님께서 질문하신 게시글 목록입니다.</h5><br>
+		<h1>Questions</h1>
+		<h5>${writer} 회원님께서 질문하신 게시글 목록입니다.</h5><br>
 
 		<div class="dropdown">
-			<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">나의 질문 목록</button>
+			<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">${writer}님의 질문 목록</button>
 			<div class="dropdown-menu">
-				<a class="dropdown-item" href="replylist.do?id=${param.id}">나의 답변 목록</a>
+				<a class="dropdown-item" href="replylist.do?id=${param.id}">${writer}님의 답변 목록</a>
 			</div>
 		</div>
 		<br>
