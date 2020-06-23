@@ -65,13 +65,13 @@ drop table qnacomment
 
 
 
+select a.* from(select rownum as rnum, b.* from (select * from qnaboard where writer like '%kang%' order by repRoot desc, repStep asc)b )a where a.rnum>=1 and a.rnum <=10
 
 
 
 
 
-
-
+select * from(select rownum rnum, id, num, title, writer, writeday, readcnt, repIndent from (select * from qnaboard where writer like '%kang%' order by repRoot desc, repStep asc) ) where rnum>=1 and rnum <=10
 
 
 

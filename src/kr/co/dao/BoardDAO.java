@@ -44,8 +44,10 @@ public class BoardDAO {
 		}
 	}
 
-	public PageTO page(int curPage) {
-		String sql = "select * from (select rownum rnum, id, num, title, writer, writeday, readcnt, repIndent from (select * from qnaboard order by repRoot desc, repStep asc))  where rnum>=? and rnum<=?";
+	public PageTO page(String find, String search, int curPage) {
+		String sql = "select * from(select rownum rnum, id, num, title, writer, writeday, readcnt, repIndent from"
+				+" (select * from qnaboard where "+find+" like '%"+search+"%' order by repRoot desc, repStep asc) )"
+				+" where rnum>=? and rnum <=?";
 		PageTO to = new PageTO(curPage);
 		List<BoardDTO> list = new ArrayList<BoardDTO>();
 		Connection conn = null;
@@ -53,7 +55,7 @@ public class BoardDAO {
 		ResultSet rs = null;
 		try {
 			conn = dataFactory.getConnection();
-			int amount = getAmount(conn);
+			int amount = getAmount(conn,find,search);
 			to.setAmount(amount);
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, to.getStartNum());
@@ -82,10 +84,10 @@ public class BoardDAO {
 		return to;
 	}
 
-	private int getAmount(Connection conn) { // 글 갯수
+	private int getAmount(Connection conn,String find, String search) { // 글 갯수
 		int amount = 0;
 		PreparedStatement pstmt = null;
-		String sql = "select count(num) from qnaboard";
+		String sql = "select count(num) from qnaboard where "+find+" like '%"+search+"%'";
 		ResultSet rs = null;
 		try {
 			pstmt = conn.prepareStatement(sql);

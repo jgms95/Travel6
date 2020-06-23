@@ -25,14 +25,22 @@ public class ListPageCommand implements Command {
 			curPage = Integer.parseInt(scurPage);
 		}
 		String id = request.getParameter("id");
+		String search = request.getParameter("search");
+		String find = request.getParameter("find");
+		if(find==null)find="title";
+		if(search==null)search="";
+		
+		
 		
 		MemberDAO memberdao = new MemberDAO();
 		LoginDTO loginDTO = new LoginDTO(id, null);
 		MemberDTO member = memberdao.selectById(loginDTO);
 				
 		BoardDAO dao = new BoardDAO();
-		PageTO to = dao.page(curPage);
+		PageTO to = dao.page(find,search,curPage);
 		
+		request.setAttribute("search", search);
+		request.setAttribute("find",find);
 		request.setAttribute("to", to);
 		request.setAttribute("list", to.getList());
 		request.setAttribute("writer", member.getName());

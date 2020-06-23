@@ -99,13 +99,31 @@
 
 		<ul class="pagination justify-content-center">
 			<li class="page-item ${to.curPage eq 1 ? 'disabled' : '' }"><a class="page-link"
-					href="qnalist.do?curPage=${to.curPage ne 1 ? (to.curPage - 1) : 1 }&id=${param.id}">Previous</a></li>
+					href="qnalist.do?curPage=${to.curPage ne 1 ? (to.curPage - 1) : 1 }&id=${param.id}&search=${search}&find=${find}">Previous</a></li>
 			<c:forEach begin="${to.beginPageNum }" end="${to.stopPageNum }" var="idx">
-				<li class="page-item ${idx eq to.curPage ? 'active' : '' }"><a class="page-link" href="qnalist.do?curPage=${idx }&id=${param.id}">${idx }</a></li>
+				<li class="page-item ${idx eq to.curPage ? 'active' : '' }"><a class="page-link" href="qnalist.do?curPage=${idx }&id=${param.id}&search=${search}&find=${find}">${idx }</a></li>
 			</c:forEach>
 			<li class="page-item ${to.curPage eq to.totalPage ? 'disabled' : '' }"><a class="page-link"
-					href="qnalist.do?curPage=${to.curPage ne to.totalPage ? to.curPage + 1 : to.totalPage }&id=${param.id}">Next</a></li>
+					href="qnalist.do?curPage=${to.curPage ne to.totalPage ? to.curPage + 1 : to.totalPage }&id=${param.id}&search=${search}&find=${find}">Next</a></li>
 		</ul>
+
+
+
+		<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+			<form class="form-inline " name='sform' method='get' action='./qnalist.do'>
+			<input type="hidden" name="id" value="${param.id}">
+				<aside >
+					<select class="btn btn-info btn-sm" name='find'>
+						<option value='writer'>글쓴이</option>
+						<option value='title'>제목</option>
+					</select> <input class="form-control mr-sm-2" type="text" name='search' >
+					<button class="btn btn-success btn-sm" type='submit'>검색</button>
+					<a class="btn btn-success btn-sm" href="qnalist.do?id=${param.id}">전체글 보기</a>
+				</aside>
+				
+			</form>
+			
+		</nav>
 
 
 		<a style="position: relative; left: 90%" href="askui.do?id=${param.id}&writer=${writer}" class="btn btn-info">

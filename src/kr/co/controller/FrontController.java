@@ -63,7 +63,6 @@ public class FrontController extends HttpServlet {
 		map.put("/updateComment.do", "kr.co.controller.UpdateComCommand");
 		map.put("/deleteComment.do", "kr.co.controller.DeleteComCommand");
 		map.put("/download.do", "kr.co.controller.DownloadAction");
-
 		
 		try {
 			com = (Command) Class.forName(map.get(sp)).newInstance();
