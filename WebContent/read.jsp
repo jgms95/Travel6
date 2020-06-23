@@ -121,13 +121,13 @@
 				</div>
 
 		|
-		<a class="btn btn-secondary" href="qnalist.do?id=${param.id}">목록</a>
+		<a class="btn btn-info" href="qnalist.do?id=${param.id}">목록</a>
 
 			</c:when>
 			<c:otherwise>
-				<a class="btn btn-secondary" href="replyui.do?num=${dto.num}&id=${param.id}">답글 쓰기</a>
+				<a class="btn btn-warning" href="replyui.do?num=${dto.num}&id=${param.id}">답글 쓰기</a>
 		|
-		<a class="btn btn-secondary" href="qnalist.do?id=${param.id}">목록</a>
+		<a class="btn btn-info" href="qnalist.do?id=${param.id}">목록</a>
 			</c:otherwise>
 		</c:choose>
 
