@@ -125,7 +125,7 @@
 			
 		</nav>
 
-
+<br>
 		<a style="position: relative; left: 90%" href="askui.do?id=${param.id}&writer=${writer}" class="btn btn-info">
 			<strong>질문하기</strong>
 		</a>

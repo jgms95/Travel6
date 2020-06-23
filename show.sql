@@ -59,7 +59,7 @@ create table leaveMember(
 
 
 
-drop table qnacomment
+drop table qnaboard
 
 
 
