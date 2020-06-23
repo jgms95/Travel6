@@ -11,6 +11,7 @@
 <title>답변 목록</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
@@ -22,11 +23,11 @@
 
 	<div class="container" style="margin: 30px auto 30px auto;">
 
-		<h1>Answers</h1>
+		<h1 class="far fa-lightbulb">&nbsp;Answers</h1>
 		<h5>${writer} 회원님께서 답변하신 게시글 목록입니다.</h5><br>
 
 		<div class="dropdown">
-			<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">${writer}님의 답변 목록</button>
+			<button type="button" class="fas fa-bars btn btn-secondary dropdown-toggle" data-toggle="dropdown">&nbsp;${writer}님의 답변 목록</button>
 			<div class="dropdown-menu">
 				<a class="dropdown-item" href="asklist.do?id=${param.id}">${writer}님의 질문 목록</a>
 			</div>

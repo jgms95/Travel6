@@ -11,17 +11,15 @@
 <title>${dto.title}</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </head>
 <script>
 	function onDownload(num) {
-
 		var o = document.getElementById("ifrm_filedown");
-
 		o.src = "download.do?num=" + num;
-
 	}
 </script>
 
@@ -36,11 +34,11 @@
 
 
 		<h2 style="background-color: rgb(55, 55, 55); color: white;">${dto.title}</h2>
-		<p>글번호: ${dto.num}&nbsp;&nbsp;&nbsp;조회수: ${dto.readcnt}</p>
+		<p class="far fa-sticky-note">&nbsp;글번호: ${dto.num}&nbsp;&nbsp;조회수: ${dto.readcnt}</p>
 
 
 		<div class="dropdown">
-			<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">${dto.writer}님의 게시글 더 보기</button>
+			<button type="button" class="fas fa-bars btn btn-info dropdown-toggle" data-toggle="dropdown">&nbsp;${dto.writer}님의 게시글 더 보기</button>
 			<div class="dropdown-menu">
 				<a class="dropdown-item" href="asklist.do?id=${dto.id}">${dto.writer}님의 질문 목록</a>
 				<div class="dropdown-divider"></div>
@@ -142,7 +140,7 @@
 
 		<br> <br>
 		<hr>
-		<h5>
+		<h5 class="fas fa-pen-fancy">
 			<strong> 댓글 남기기</strong>
 		</h5>
 		<form action="insertQnaComment.do" method="post" class="was-validated">
@@ -151,12 +149,13 @@
 
 
 			<div class="form-group">
-				<label for="title">내용 : </label> <input type="text" class="form-control" placeholder="내용을 입력하세요." name="content" required>
+				<input type="text" class="form-control" placeholder="내용을 입력하세요." name="content" required>
 				<div class="valid-feedback">입력 완료</div>
 				<div class="invalid-feedback">정보를 입력해주세요.</div>
 			</div>
 			<button type="submit" class="btn btn-warning">작성완료</button>
 		</form>
+		<br>
 		<hr>
 
 
@@ -168,10 +167,10 @@
 			request.setAttribute("count", count);
 		%>
 
-		<h5>
+		<h5 class="far fa-copy">
 			<strong>댓글 목록 [${count}] </strong>
 		</h5>
-		<br>
+		<br><br>
 		<c:forEach items="${commentlist}" var="commentdto">
 
 			<c:if test="${commentdto.repIndent>0}">

@@ -11,6 +11,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
@@ -31,14 +32,14 @@
 
 
 	<div class="container" style="margin: 30px auto 30px auto;">
-		<h1>Q&amp;A</h1>
+		<h1 class="far fa-comments">&nbsp;Q&amp;A</h1>
 		<p>
 			<strong>회원 전용</strong> Q&amp;A 게시판입니다. 궁금하신 사항은 '<strong>질문하기</strong>'로 문의해주세요.
 		</p>
 
 
 		<div class="dropdown">
-			<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">나의 Q&amp;A로 가기</button>
+			<button type="button" class="fas fa-bars btn btn-info dropdown-toggle" data-toggle="dropdown">&nbsp;나의 Q&amp;A로 가기</button>
 			<div class="dropdown-menu">
 				<a class="dropdown-item" href="asklist.do?id=${param.id}">나의 질문 목록</a>
 				<div class="dropdown-divider"></div>
