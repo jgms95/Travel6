@@ -9,7 +9,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import kr.co.command.Command;
+
+import kr.co.domain.Command;
 import kr.co.domain.CommandAction;
 
 
@@ -42,27 +43,28 @@ public class FrontController extends HttpServlet {
 		map.put("/findPwUi.do", "kr.co.member.FindPwUICommand");
 		map.put("/findId.do", "kr.co.member.FindIdCommand");
 		map.put("/findPw.do", "kr.co.member.FindPwCommand");
-		map.put("/qnaUpdateui.do", "kr.co.controller.QnaUpdateUICommand");
-		map.put("/qnaUpdate.do", "kr.co.controller.QnaUpdateCommand");
-		map.put("/qnalist.do", "kr.co.controller.ListPageCommand");
-		map.put("/askui.do","kr.co.controller.AskUICommand");
-		map.put("/ask.do","kr.co.controller.AskCommand");
-		map.put("/read.do","kr.co.controller.ReadCommand");
-		map.put("/qnaDelete.do","kr.co.controller.QnaDeleteCommand");
-		map.put("/replyui.do","kr.co.controller.ReplyUICommand");
-		map.put("/reply.do","kr.co.controller.ReplyCommand");
-		map.put("/asklist.do","kr.co.controller.MyAskListCommand");
-		map.put("/replylist.do","kr.co.controller.MyReplyListCommand");
 		map.put("/insertui.do", "kr.co.member.InsertUICommand");
 		map.put("/insert.do", "kr.co.member.InsertCommand");
 		map.put("/updateui.do", "kr.co.member.UpdateUICommand");
 		map.put("/update.do", "kr.co.member.UpdateCommand");
 		map.put("/delete.do", "kr.co.member.DeleteCommand");
-		map.put("/insertQnaComment.do","kr.co.controller.PutQnaCommentCommand");
-		map.put("/replyComment.do","kr.co.controller.ReplyComCommand");
-		map.put("/updateComment.do", "kr.co.controller.UpdateComCommand");
-		map.put("/deleteComment.do", "kr.co.controller.DeleteComCommand");
-		map.put("/download.do", "kr.co.controller.DownloadAction");
+		
+		map.put("/board6qnaUpdateui.do", "kr.co.board6.command.QnaUpdateUICommand");
+		map.put("/board6qnaUpdate.do", "kr.co.board6.command.QnaUpdateCommand");
+		map.put("/board6qnalist.do", "kr.co.board6.command.ListPageCommand");
+		map.put("/board6askui.do","kr.co.board6.command.AskUICommand");
+		map.put("/board6ask.do","kr.co.board6.command.AskCommand");
+		map.put("/board6read.do","kr.co.board6.command.ReadCommand");
+		map.put("/board6qnaDelete.do","kr.co.board6.command.QnaDeleteCommand");
+		map.put("/board6replyui.do","kr.co.board6.command.ReplyUICommand");
+		map.put("/board6reply.do","kr.co.board6.command.ReplyCommand");
+		map.put("/board6asklist.do","kr.co.board6.command.MyAskListCommand");
+		map.put("/board6replylist.do","kr.co.board6.command.MyReplyListCommand");
+		map.put("/board6insertQnaComment.do","kr.co.board6.command.PutQnaCommentCommand");
+		map.put("/board6replyComment.do","kr.co.board6.command.ReplyComCommand");
+		map.put("/board6updateComment.do", "kr.co.board6.command.UpdateComCommand");
+		map.put("/board6deleteComment.do", "kr.co.board6.command.DeleteComCommand");
+		map.put("/board6download.do", "kr.co.board6.command.DownloadAction");
 		
 		try {
 			com = (Command) Class.forName(map.get(sp)).newInstance();

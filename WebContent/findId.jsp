@@ -9,12 +9,12 @@
 <head>
 <meta charset="UTF-8">
 <title>아이디 찾기</title>
-<%@ include file="./com/head.jsp"%>
+<%@ include file="../com/head.jsp"%>
 </head>
 <body>
 
-	<%@ include file="./com/top.jsp"%>
-	<%@ include file="./com/navbar.jsp"%>
+	<%@ include file="../com/top.jsp"%>
+	<%@ include file="../com/navbar.jsp"%>
 
 	<div class="container" style="margin: 30px 0 30px 0;">
 		<h2>아이디 찾기</h2>
@@ -39,7 +39,7 @@
 			<a href="main.jsp" class="btn btn-primary">메인 화면으로 가기</a>
 		</form>
 	</div>
-	<%@ include file="./com/footer.jsp" %>
+	<%@ include file="../com/footer.jsp" %>
 
 
 

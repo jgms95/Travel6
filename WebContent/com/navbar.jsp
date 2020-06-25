@@ -13,7 +13,7 @@
 			<li class="nav-item"><a class="nav-link" href="http://172.30.1.38:8089/Travel/board4list.do?curPage=1&location=000&thema=000">숙박 정보</a></li>
 			<li class="nav-item"><a class="nav-link" href="http://172.30.1.6:8089/Travel5/index.jsp ">맛집 정보</a></li>
 			<li class="nav-item"><a class="nav-link" href="http://172.30.1.43:8089/Travel/notice_list.do">공지 사항</a></li>
-			<li class="nav-item"><a class="nav-link" href="${empty login.id ? 'loginui.do' : 'qnalist.do?id=' }${login.id }">Q&amp;A</a></li>
+			<li class="nav-item"><a class="nav-link" href="${empty login.id ? 'loginui.do' : 'board6qnalist.do?id=' }${login.id }">Q&amp;A</a></li>
 			
 		</ul>
 	</div>

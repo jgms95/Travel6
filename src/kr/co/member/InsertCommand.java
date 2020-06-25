@@ -6,11 +6,12 @@ import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import kr.co.command.Command;
+
 import kr.co.dao.MemberDAO;
+import kr.co.domain.Command;
 import kr.co.domain.CommandAction;
 import kr.co.domain.MemberDTO;
-import kr.co.domain.leaveMemberDTO;
+
 
 
 public class InsertCommand implements Command {
@@ -26,37 +27,38 @@ public class InsertCommand implements Command {
 		if (sAge != null) {
 			age = Integer.parseInt(sAge);
 		}
-		String overlap; //아이디 중복되는가
+		boolean exist = false; // 탈퇴한 회원인가 여부
 		
 		MemberDAO dao = new MemberDAO();
-		List<leaveMemberDTO> leaveinfos = dao.selectLeaveMembers();
-		List<String> memberids = dao.selectId();
+		List<String> alreadyId = dao.selectId(); //이미 가입된 회원인가 여부
+		for(String i : alreadyId) {
+			if(id.equals(i)) {
+				exist = true;
+				request.setAttribute("exist", exist);
+				return new CommandAction(false, "insertui.jsp");
+			}
+		}
 		
-		for(leaveMemberDTO dto : leaveinfos) {
-			if(id.equals(dto.getId())) {
-				if(name.equals(dto.getName())&&(age==dto.getAge())) {
-					dao.deleteLeaveMember(id);
+		
+		
+		List<MemberDTO> existId = dao.selectDeletedId(); //탈퇴한 회원 목록
+		
+		for(MemberDTO i : existId) {
+			if(id.equals(i.getId())) {
+				if(name.equals(i.getName())&&(age==i.getAge())){
+					dao.chanegeAuthority(id); //탈퇴 해제
+					return new CommandAction(true, "loginui.jsp");
 				}else {
-					//다시 회원가입 페이지로 이동 후 "가입 불가능한 ID입니다. 다시 입력해주세요" 출력
-					overlap = "true";
-					return new CommandAction(true, "insertui.do?overlap=" + overlap);
+					exist = true;
+					request.setAttribute("exist", exist);
+					return new CommandAction(false, "insertui.jsp");
 				}
 			}
 		}
 		
-		for(String i : memberids) {
-			if(id.equals(i)) {
-			  // 다시 회원가입 페이지로 이동 후 "가입 불가능한 ID입니다. 다시 입력해주세요" 출력
-				overlap = "true";
-				return new CommandAction(true, "insertui.do?overlap=" + overlap);
-			}
-			
-		}
-		
 		
 		dao.insert(new MemberDTO(id, name, age, pw));
-		
-		return new CommandAction(true, "main.jsp");
+		return new CommandAction(true, "loginui.jsp");
 	}
 
 }

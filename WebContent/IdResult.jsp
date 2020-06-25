@@ -9,11 +9,11 @@
 <head>
 <meta charset="UTF-8">
 <title>아이디 찾기</title>
-<%@ include file="./com/head.jsp"%>
+<%@ include file="../com/head.jsp"%>
 </head>
 <body>
-<%@ include file="./com/top.jsp"%>
-	<%@ include file="./com/navbar.jsp"%>
+<%@ include file="../com/top.jsp"%>
+	<%@ include file="../com/navbar.jsp"%>
 <div class="container" style="margin: 30px 0 30px 0;">
 		<h2>${dto.name}님 (${dto.age}세)의 id 정보</h2>
 		<div class="card" style="width: 400px">
@@ -24,6 +24,6 @@
 		</div>
 	</div>
 	</div>
-	<%@ include file="./com/footer.jsp"%>
+	<%@ include file="../com/footer.jsp"%>
 </body>
 </html>

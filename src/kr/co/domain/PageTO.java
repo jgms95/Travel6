@@ -13,7 +13,7 @@ public class PageTO {
 	private int beginPageNum; // 현재페이지의 페이지세트에 있는 첫페이지번호,종속변수
 	private int stopPageNum;//현재페이지의 페이지세트에 있는 마지막번호,종속변수
 	
-	private List<BoardDTO> list;
+	private List<Board6DTO> list;
 	
 	public PageTO() {
 		changeVarVal();
@@ -103,11 +103,11 @@ public class PageTO {
 		this.stopPageNum = stopPageNum;
 	}
 
-	public List<BoardDTO> getList() {
+	public List<Board6DTO> getList() {
 		return list;
 	}
 
-	public void setList(List<BoardDTO> list) {
+	public void setList(List<Board6DTO> list) {
 		this.list = list;
 	}
 	

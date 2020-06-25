@@ -8,6 +8,7 @@
 <head>
 <title>회원가입</title>
 <%@ include file="./com/head.jsp"%>
+
 </head>
 <body>
 	<%@ include file="./com/top.jsp"%>
@@ -21,15 +22,16 @@
 			해주시면 가입 할 수 있습니다.
 		</p>
 		
-		
-		<c:if test="${overlap}">
+		<c:if test="${exist}">
 			<div class="alert alert-warning">
 				<button type="button" class="close" data-dismiss="alert">&times;</button>
 				<strong>Warning!</strong> 가입 불가능한 ID입니다. 다시 입력해주세요.
 			</div>
 		</c:if>
+	
 
 		<form action="insert.do" class="was-validated" method="post">
+	
 			<div class="form-group">
 				<label for="id">Id:</label> <input type="text" class="form-control" id="id" placeholder="ID를 입력해주세요" name="id" required>
 				<div class="valid-feedback">완료됨.</div>
