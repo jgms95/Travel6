@@ -76,8 +76,17 @@
 						%>
 						<td width="300px">
 
-							<c:forEach begin="1" end="${dto.repIndent}">&nbsp;&nbsp;</c:forEach>
-							<a style="color: rgb(79,79,79);" href="read.do?num=${dto.num}&id=${param.id}">
+							<c:forEach begin="1" end="${dto.repIndent}">
+							&nbsp;&nbsp;
+							
+							</c:forEach>
+							<c:if test="${dto.repIndent>0}">
+								<svg class="bi bi-arrow-return-right" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" d="M10.146 5.646a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L12.793 9l-2.647-2.646a.5.5 0 0 1 0-.708z" />
+  <path fill-rule="evenodd" d="M3 2.5a.5.5 0 0 0-.5.5v4A2.5 2.5 0 0 0 5 9.5h8.5a.5.5 0 0 0 0-1H5A1.5 1.5 0 0 1 3.5 7V3a.5.5 0 0 0-.5-.5z" />
+</svg>	Re :
+							</c:if>
+							<a style="color: rgb(79, 79, 79);" href="read.do?num=${dto.num}&id=${param.id}">
 								<strong>${dto.title}</strong> <strong style="color: rgb(240, 70, 74);">[${count}]</strong>
 							</a>
 
@@ -102,7 +111,8 @@
 			<li class="page-item ${to.curPage eq 1 ? 'disabled' : '' }"><a class="page-link"
 					href="qnalist.do?curPage=${to.curPage ne 1 ? (to.curPage - 1) : 1 }&id=${param.id}&search=${search}&find=${find}">Previous</a></li>
 			<c:forEach begin="${to.beginPageNum }" end="${to.stopPageNum }" var="idx">
-				<li class="page-item ${idx eq to.curPage ? 'active' : '' }"><a class="page-link" href="qnalist.do?curPage=${idx }&id=${param.id}&search=${search}&find=${find}">${idx }</a></li>
+				<li class="page-item ${idx eq to.curPage ? 'active' : '' }"><a class="page-link"
+						href="qnalist.do?curPage=${idx }&id=${param.id}&search=${search}&find=${find}">${idx }</a></li>
 			</c:forEach>
 			<li class="page-item ${to.curPage eq to.totalPage ? 'disabled' : '' }"><a class="page-link"
 					href="qnalist.do?curPage=${to.curPage ne to.totalPage ? to.curPage + 1 : to.totalPage }&id=${param.id}&search=${search}&find=${find}">Next</a></li>
@@ -112,21 +122,21 @@
 
 		<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
 			<form class="form-inline " name='sform' method='get' action='./qnalist.do'>
-			<input type="hidden" name="id" value="${param.id}">
-				<aside >
+				<input type="hidden" name="id" value="${param.id}">
+				<aside>
 					<select class="btn btn-info btn-sm" name='find'>
 						<option value='writer'>글쓴이</option>
 						<option value='title'>제목</option>
-					</select> <input class="form-control mr-sm-2" type="text" name='search' >
+					</select> <input class="form-control mr-sm-2" type="text" name='search'>
 					<button class="btn btn-success btn-sm" type='submit'>검색</button>
 					<a class="btn btn-success btn-sm" href="qnalist.do?id=${param.id}">전체글 보기</a>
 				</aside>
-				
+
 			</form>
-			
+
 		</nav>
 
-<br>
+		<br>
 		<a style="position: relative; left: 90%" href="askui.do?id=${param.id}&writer=${writer}" class="btn btn-info">
 			<strong>질문하기</strong>
 		</a>

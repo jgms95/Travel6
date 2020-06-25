@@ -46,7 +46,7 @@ public class ReplyCommand implements Command {
 			orgnum = Integer.parseInt(sNum);
 		}
 		String writer = multi.getParameter("writer");
-		String title = "Re: " + multi.getParameter("title");
+		String title = multi.getParameter("title");
 		String content = multi.getParameter("content");
 
 		BoardDAO dao = new BoardDAO();
