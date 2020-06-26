@@ -10,8 +10,8 @@ import javax.servlet.http.HttpSession;
 import kr.co.dao.MemberDAO;
 import kr.co.domain.Command;
 import kr.co.domain.CommandAction;
-import kr.co.domain.LoginDTO;
-import kr.co.domain.MemberDTO;
+import kr.co.dto.LoginDTO;
+import kr.co.dto.MemberDTO;
 
 
 public class UpdateUICommand implements Command {

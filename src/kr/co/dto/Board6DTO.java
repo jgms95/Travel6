@@ -1,4 +1,4 @@
-package kr.co.domain;
+package kr.co.dto;
 import java.io.Serializable;
 
 public class Board6DTO implements Serializable{

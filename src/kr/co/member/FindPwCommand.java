@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import kr.co.dao.MemberDAO;
 import kr.co.domain.Command;
 import kr.co.domain.CommandAction;
-import kr.co.domain.MemberDTO;
+import kr.co.dto.MemberDTO;
 
 public class FindPwCommand implements Command {
 
@@ -27,6 +27,8 @@ public class FindPwCommand implements Command {
 		MemberDTO dto = dao.findPw(id,name,age);
 		
 		if(dto.getPw()!=null) {
+			String meaning = dao.findMeaning(dto.getStatus());
+			request.setAttribute("meaning", meaning);
 			request.setAttribute("dto", dto);
 			return new CommandAction(false, "PwResult.jsp");
 			

@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import kr.co.dao.MemberDAO;
 import kr.co.domain.Command;
 import kr.co.domain.CommandAction;
-import kr.co.domain.MemberDTO;
+import kr.co.dto.MemberDTO;
 
 public class FindIdCommand implements Command{
 
@@ -28,6 +28,8 @@ public class FindIdCommand implements Command{
 		MemberDTO dto = dao.findId(name,age);
 		
 		if(dto.getId()!=null) {
+			String meaning = dao.findMeaning(dto.getStatus());
+			request.setAttribute("meaning", meaning);
 			request.setAttribute("dto", dto);
 			return new CommandAction(false, "IdResult.jsp");
 			

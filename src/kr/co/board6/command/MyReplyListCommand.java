@@ -7,9 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import kr.co.dao.Board6DAO;
-import kr.co.domain.Board6DTO;
 import kr.co.domain.Command;
 import kr.co.domain.CommandAction;
+import kr.co.dto.Board6DTO;
 
 public class MyReplyListCommand implements Command {
 

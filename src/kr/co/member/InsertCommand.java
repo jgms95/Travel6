@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import kr.co.dao.MemberDAO;
 import kr.co.domain.Command;
 import kr.co.domain.CommandAction;
-import kr.co.domain.MemberDTO;
+import kr.co.dto.MemberDTO;
 
 
 
@@ -30,6 +30,15 @@ public class InsertCommand implements Command {
 		boolean exist = false; // 탈퇴한 회원인가 여부
 		
 		MemberDAO dao = new MemberDAO();
+		int count = dao.countMemberStatus();
+		if(count==0) {
+			dao.insertStatus("01","가입된 상태");
+			dao.insertStatus("02","탈퇴 상태");
+		}
+		
+		
+		
+		
 		List<String> alreadyId = dao.selectId(); //이미 가입된 회원인가 여부
 		for(String i : alreadyId) {
 			if(id.equals(i)) {
@@ -46,7 +55,7 @@ public class InsertCommand implements Command {
 		for(MemberDTO i : existId) {
 			if(id.equals(i.getId())) {
 				if(name.equals(i.getName())&&(age==i.getAge())){
-					dao.chanegeAuthority(id); //탈퇴 해제
+					dao.chanegeStatus(id);//탈퇴 해제
 					return new CommandAction(true, "loginui.jsp");
 				}else {
 					exist = true;

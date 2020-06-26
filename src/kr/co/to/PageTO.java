@@ -1,6 +1,8 @@
-package kr.co.domain;
+package kr.co.to;
 
 import java.util.List;
+
+import kr.co.dto.Board6DTO;
 
 public class PageTO {
 	private int curPage = 1; //현재 페이지

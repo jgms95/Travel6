@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import kr.co.dao.Board6DAO;
 import kr.co.domain.Command;
 import kr.co.domain.CommandAction;
-import kr.co.domain.QnaCommandDTO;
+import kr.co.dto.QnaCommandDTO;
 
 public class UpdateComCommand implements Command {
 

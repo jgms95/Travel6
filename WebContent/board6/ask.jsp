@@ -50,7 +50,7 @@
 			<br><br>
 
 			<button type="submit" class="btn btn-info">작성완료</button>
-			<a class="btn btn-secondary" href="qnalist.do?id=${param.id}">뒤로가기</a>
+			<a class="btn btn-secondary" href="board6qnalist.do?id=${param.id}">뒤로가기</a>
 		</form>
 
 

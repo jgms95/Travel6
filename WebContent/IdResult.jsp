@@ -20,6 +20,7 @@
 			<img class="card-img-top" src="./img/img_avatar1.png" alt="Card image" style="width: 100%">
 			<div class="card-body">
 				<h4 class="card-title">${dto.name }님의 아이디 : ${dto.id }</h4>
+				<h4 class="card-title">${dto.id }님 계정의 상태 : ${meaning}</h4>
 				<a href="loginui.do?" class="btn btn-primary">로그인하기</a>
 		</div>
 	</div>

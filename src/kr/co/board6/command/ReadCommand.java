@@ -9,12 +9,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import kr.co.dao.Board6DAO;
 import kr.co.dao.MemberDAO;
-import kr.co.domain.Board6DTO;
 import kr.co.domain.Command;
 import kr.co.domain.CommandAction;
-import kr.co.domain.LoginDTO;
-import kr.co.domain.MemberDTO;
-import kr.co.domain.QnaCommandDTO;
+import kr.co.dto.Board6DTO;
+import kr.co.dto.LoginDTO;
+import kr.co.dto.MemberDTO;
+import kr.co.dto.QnaCommandDTO;
 
 public class ReadCommand implements Command {
 

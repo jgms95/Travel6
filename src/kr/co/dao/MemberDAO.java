@@ -10,8 +10,8 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-import kr.co.domain.LoginDTO;
-import kr.co.domain.MemberDTO;
+import kr.co.dto.LoginDTO;
+import kr.co.dto.MemberDTO;
 
 public class MemberDAO {
 	private DataSource dataFactory;
@@ -124,7 +124,7 @@ public class MemberDAO {
 	public void delete(LoginDTO loginDTO) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		String sql = "update TRAVELMEMBER set authority ='02' where id = ?";
+		String sql = "update TRAVELMEMBER set status ='02' where id = ?";
 
 		try {
 			conn = dataFactory.getConnection();
@@ -159,7 +159,7 @@ public class MemberDAO {
 		MemberDTO dto = new MemberDTO();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		String sql = "select id,name,age from travelmember where name = ? and age = ?";
+		String sql = "select id,name,age,status from travelmember where name = ? and age = ?";
 		ResultSet rs = null;
 
 		try {
@@ -173,6 +173,7 @@ public class MemberDAO {
 				dto.setId(rs.getString("id"));
 				dto.setName(rs.getString("name"));
 				dto.setAge(rs.getInt("age"));
+				dto.setStatus(rs.getString("status"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -186,7 +187,7 @@ public class MemberDAO {
 		MemberDTO dto = new MemberDTO();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		String sql = "select id,name,age,pw from travelmember where id = ? and name = ? and age = ?";
+		String sql = "select id,name,age,pw,status from travelmember where id = ? and name = ? and age = ?";
 		ResultSet rs = null;
 
 		try {
@@ -202,6 +203,7 @@ public class MemberDAO {
 				dto.setName(rs.getString("name"));
 				dto.setAge(rs.getInt("age"));
 				dto.setPw(rs.getString("pw"));
+				dto.setStatus(rs.getString("status"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -216,7 +218,7 @@ public class MemberDAO {
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		String sql = "select id,name,age from travelMember where  authority ='02'";
+		String sql = "select id,name,age from travelMember where  status ='02'";
 		ResultSet rs = null;
 
 		try {
@@ -234,14 +236,13 @@ public class MemberDAO {
 		} finally {
 			closeAll(rs, pstmt, conn);
 		}
-
 		return existid;
 	}
 
-	public void chanegeAuthority(String id) {
+	public void chanegeStatus(String id) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		String sql = "update TRAVELMEMBER set authority ='01' where id = ?";
+		String sql = "update TRAVELMEMBER set status ='01' where id = ?";
 
 		try {
 			conn = dataFactory.getConnection();
@@ -261,14 +262,14 @@ public class MemberDAO {
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		String sql = "select id from travelMember where authority ='01'";
+		String sql = "select id from travelMember where status ='01'";
 		ResultSet rs = null;
 
 		try {
 			conn = dataFactory.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
-			if (rs.next()) {
+			while (rs.next()) {
 				String id = rs.getString("id");
 				ids.add(id);
 			}
@@ -280,5 +281,76 @@ public class MemberDAO {
 
 		return ids;
 	}
+
+	public int countMemberStatus() {
+		int count = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = "select count(*) from memberStatus";
+		ResultSet rs = null;
+
+		try {
+			conn = dataFactory.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				count = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeAll(rs, pstmt, conn);
+		}
+		
+		
+		
+		return count;
+	}
+
+	public void insertStatus(String string1, String string2) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = "insert into memberStatus (status, meaning) values (?,?)";
+
+		try {
+			conn = dataFactory.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, string1);
+			pstmt.setString(2, string2);
+
+			pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeAll(null, pstmt, conn);
+		}
+	}
+
+	public String findMeaning(String status) {
+		String meaning = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = "select meaning from memberStatus where status = ?";
+		ResultSet rs = null;
+
+		try {
+			conn = dataFactory.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, status);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				meaning = rs.getString(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeAll(rs, pstmt, conn);
+		}
+		
+		return meaning;
+	}
+	
+	
 
 }

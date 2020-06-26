@@ -19,7 +19,7 @@
 <script>
 	function onDownload(num) {
 		var o = document.getElementById("ifrm_filedown");
-		o.src = "download.do?num=" + num;
+		o.src = "board6download.do?num=" + num;
 	}
 </script>
 

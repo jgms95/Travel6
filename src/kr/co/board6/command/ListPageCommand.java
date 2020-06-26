@@ -10,9 +10,9 @@ import kr.co.dao.Board6DAO;
 import kr.co.dao.MemberDAO;
 import kr.co.domain.Command;
 import kr.co.domain.CommandAction;
-import kr.co.domain.LoginDTO;
-import kr.co.domain.MemberDTO;
-import kr.co.domain.PageTO;
+import kr.co.dto.LoginDTO;
+import kr.co.dto.MemberDTO;
+import kr.co.to.PageTO;
 
 public class ListPageCommand implements Command {
 

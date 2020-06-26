@@ -11,9 +11,9 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import kr.co.domain.Board6DTO;
-import kr.co.domain.PageTO;
-import kr.co.domain.QnaCommandDTO;
+import kr.co.dto.Board6DTO;
+import kr.co.dto.QnaCommandDTO;
+import kr.co.to.PageTO;
 
 public class Board6DAO {
 

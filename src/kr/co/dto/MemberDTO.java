@@ -1,4 +1,4 @@
-package kr.co.domain;
+package kr.co.dto;
 
 import java.io.Serializable;
 
@@ -13,6 +13,7 @@ public class MemberDTO implements Serializable {
 	private String name;
 	private int age;
 	private String pw;
+	private String status;
 	
 	public MemberDTO() {
 	}
@@ -24,6 +25,10 @@ public class MemberDTO implements Serializable {
 		this.age = age;
 		this.pw = pw;
 	}
+	
+	
+
+	
 
 	public String getId() {
 		return id;
@@ -60,7 +65,13 @@ public class MemberDTO implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	public String getStatus() {
+		return status;
+	}
 
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;

@@ -11,9 +11,9 @@ import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import kr.co.dao.Board6DAO;
-import kr.co.domain.Board6DTO;
 import kr.co.domain.Command;
 import kr.co.domain.CommandAction;
+import kr.co.dto.Board6DTO;
 
 public class AskCommand implements Command {
 
